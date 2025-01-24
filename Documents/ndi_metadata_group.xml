@@ -1,0 +1,10 @@
+<ndi_metadata_group>
+    <ndi_color_info
+        transfer="bt_2100_hlg"
+        matrix="bt_2020"
+        primaries="bt_2020"
+    />
+    <vancData version="1.0">
+        <vancPacket did="97" sdid="1" line="9">lmlZT38BWHL0/ICA/YCA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAA+gAAc/LgICAgfj//4WVuZ8E//3QBWEY=</vancPacket>
+    </vancData>
+</ndi_metadata_group>

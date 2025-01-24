@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="ndi_color_info" type="ndi_color_info_type"/>
+
+    <xs:complexType name="ndi_color_info_type">
+        <xs:attribute name="transfer" type="transferType" use="required" />
+        <xs:attribute name="matrix" type="matrixType" use="required" />
+        <xs:attribute name="primaries" type="primariesType" use="required" />
+    </xs:complexType>
+
+    <xs:simpleType name="transferType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="bt_601"/>
+            <xs:enumeration value="bt_709"/>
+            <xs:enumeration value="bt_2020"/>
+            <xs:enumeration value="bt_2100_hlg"/>
+            <xs:enumeration value="bt_2100_pq"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="matrixType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="bt_601"/>
+            <xs:enumeration value="bt_709"/>
+            <xs:enumeration value="bt_2020"/>
+            <xs:enumeration value="bt_2100"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="primariesType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="bt_601"/>
+            <xs:enumeration value="bt_709"/>
+            <xs:enumeration value="bt_2020"/>
+            <xs:enumeration value="bt_2100"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

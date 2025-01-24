@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+            xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+            elementFormDefault="qualified"
+            vc:minVersion="1.1">
+
+    <!-- Some types to keep things neat -->
+    <xs:simpleType name="ptz_101_type">
+        <xs:restriction base="xs:decimal">
+            <xs:minInclusive value="-1.0"/>
+            <xs:maxInclusive value="+1.0"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="ptz_01_type">
+        <xs:restriction base="xs:decimal">
+            <xs:minInclusive value="0.0"/>
+            <xs:maxInclusive value="+1.0"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="ptz_preset_type">
+        <xs:restriction base="xs:int">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="99"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Pan, Tilt, & Zoom -->
+    <xs:element name="ntk_ptz_zoom" type="ntk_ptz_zoom_type"/>
+    <xs:complexType name="ntk_ptz_zoom_type">
+        <xs:attribute name="zoom" type="ptz_01_type" use="required" />
+    </xs:complexType>
+
+    <xs:element name="ntk_ptz_zoom_speed" type="ntk_ptz_zoom_speed_type"/>
+    <xs:complexType name="ntk_ptz_zoom_speed_type">
+        <xs:attribute name="zoom_speed" type="ptz_101_type" use="required" />
+    </xs:complexType>
+
+    <xs:element name="ntk_ptz_pan_tilt" type="ntk_ptz_pan_tilt_type"/>
+    <xs:complexType name="ntk_ptz_pan_tilt_type">
+        <xs:attribute name="pan" type="ptz_101_type" use="optional"/>
+        <xs:attribute name="tilt" type="ptz_101_type" use="optional"/>
+    </xs:complexType>
+
+    <xs:element name="ntk_ptz_pan_tilt_speed" type="ntk_ptz_pan_tilt_speed_type"/>
+    <xs:complexType name="ntk_ptz_pan_tilt_speed_type">
+        <xs:attribute name="pan_speed" type="ptz_101_type" use="optional"/>
+        <xs:attribute name="tilt_speed" type="ptz_101_type" use="optional"/>
+    </xs:complexType>
+
+    <!-- Focus -->
+    <xs:element name="ntk_ptz_focus" type="ntk_ptz_focus_type">
+        <xs:alternative test="@mode = 'auto'" type="ntk_ptz_focus_auto_type"/>
+        <xs:alternative test="@mode = 'manual'" type="ntk_ptz_focus_manual_type"/>
+    </xs:element>
+
+    <xs:complexType name="ntk_ptz_focus_type">
+        <xs:attribute name="mode" type="ntk_ptz_focus_mode_type" use="required" />
+    </xs:complexType>
+
+    <xs:simpleType name="ntk_ptz_focus_mode_type">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="auto" />
+            <xs:enumeration value="manual" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="ntk_ptz_focus_auto_type">
+        <xs:complexContent>
+            <xs:extension base="ntk_ptz_focus_type">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="ntk_ptz_focus_manual_type">
+        <xs:complexContent>
+            <xs:extension base="ntk_ptz_focus_type">
+                <xs:attribute name="distance" type="ptz_01_type" use="required" />
+                <xs:attribute name="speed" type="ptz_01_type" use="optional" />
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- Presets -->
+    <xs:element name="ntk_ptz_recall_preset" type="ntk_ptz_recall_preset_type" />
+    <xs:complexType name="ntk_ptz_recall_preset_type">
+        <xs:attribute name="index" type="ptz_preset_type" use="required" />
+        <xs:attribute name="speed" type="ptz_01_type" use="optional"/>
+    </xs:complexType>
+
+    <xs:element name="ntk_ptz_store_preset" type="ntk_ptz_store_preset_type" />
+    <xs:complexType name="ntk_ptz_store_preset_type">
+        <xs:attribute name="index" type="ptz_preset_type" use="required" />
+    </xs:complexType>
+
+    <!-- White Balance -->
+    <xs:element name="ntk_ptz_white_balance" type="ntk_ptz_white_balance_type">
+        <xs:alternative test="@mode = 'auto'" type="ntk_ptz_white_balance_auto_type"/>
+        <xs:alternative test="@mode = 'indoor'" type="ntk_ptz_white_balance_auto_type"/>
+        <xs:alternative test="@mode = 'outdoor'" type="ntk_ptz_white_balance_auto_type"/>
+        <xs:alternative test="@mode = 'one_shot'" type="ntk_ptz_white_balance_auto_type"/>
+        <xs:alternative test="@mode = 'manual'" type="ntk_ptz_white_balance_manual_type"/>
+    </xs:element>
+
+    <xs:complexType name="ntk_ptz_white_balance_type">
+        <xs:attribute name="mode" type="ntk_ptz_white_balance_mode_type" use="required" />
+    </xs:complexType>
+
+    <xs:simpleType name="ntk_ptz_white_balance_mode_type">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="auto" />
+            <xs:enumeration value="indoor" />
+            <xs:enumeration value="outdoor" />
+            <xs:enumeration value="one_shot" />
+            <xs:enumeration value="manual" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="ntk_ptz_white_balance_auto_type">
+        <xs:complexContent>
+            <xs:extension base="ntk_ptz_white_balance_type">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="ntk_ptz_white_balance_manual_type">
+        <xs:complexContent>
+            <xs:extension base="ntk_ptz_white_balance_type">
+                <xs:attribute name="red" type="ptz_01_type" use="required" />
+                <xs:attribute name="blue" type="ptz_01_type" use="required" />
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- Exposure -->
+    <xs:element name="ntk_ptz_exposure" type="ntk_ptz_exposure_type">
+        <xs:alternative test="@mode = 'auto'" type="ntk_ptz_exposure_auto_type"/>
+        <xs:alternative test="@mode = 'manual'" type="ntk_ptz_exposure_manual_type"/>
+    </xs:element>
+
+    <xs:complexType name="ntk_ptz_exposure_type">
+        <xs:attribute name="mode" type="ntk_ptz_exposure_mode_type" use="required" />
+    </xs:complexType>
+
+    <xs:simpleType name="ntk_ptz_exposure_mode_type">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="auto" />
+            <xs:enumeration value="manual" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="ntk_ptz_exposure_auto_type">
+        <xs:complexContent>
+            <xs:extension base="ntk_ptz_exposure_type">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="ntk_ptz_exposure_manual_type">
+        <xs:complexContent>
+            <xs:extension base="ntk_ptz_exposure_type">
+                <xs:attribute name="value" type="ptz_01_type" use="required" />
+                <xs:attribute name="gain" type="ptz_01_type" use="optional" />
+                <xs:attribute name="shutter" type="ptz_01_type" use="optional" />
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>

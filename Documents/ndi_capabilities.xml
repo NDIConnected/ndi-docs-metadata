@@ -1,0 +1,13 @@
+<ndi_capabilities
+    web_control="http://ndi.video/"
+    ntk_ptz="true"
+    ntk_pan_tilt="true"
+    ntk_zoom="true"
+    ntk_iris="true"
+    ntk_white_balance="true"
+    ntk_exposure="true"
+    ntk_exposure_v2="true"
+    ntk_focus="true"
+    ntk_autofocus="true"
+    ntk_preset_speed="true"
+/>

@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XmlStudioProjectOptions Version="20.7.17.13201">
+  <File>.\Schemas\ndi_metadata_recv.xsd</File>
+  <File>.\Schemas\ndi_metadata_all.xsd</File>
+  <File>.\Schemas\ndi_metadata_send.xsd</File>
+  <File>.\Schemas\ndi_metadata_video.xsd</File>
+  <ActiveWindow>ndi_metadata_all.xsd</ActiveWindow>
+  <ProjectTreeState />
+  <UserProperties sourceUri=".\Documents\ndi_capabilities.xml">
+    <Value name="DisplayMode">Source</Value>
+    <Value name="ValidatingSchema">XML:Xerces:1.1:Validating</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Documents\ndi_color_info.xml">
+    <Value name="ValidatingSchema">XML:Xerces:1.1:Validating</Value>
+    <Value name="DisplayMode">Source</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Documents\ndi_metadata-midi.xml">
+    <Value name="ValidatingSchema">XML:Xerces:1.1:Validating</Value>
+    <Value name="DisplayMode">Source</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Documents\ndi_product.xml">
+    <Value name="ValidatingSchema">XML:Xerces:1.1:Validating</Value>
+    <Value name="DisplayMode">Source</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Documents\ndi_tracking_info.xml">
+    <Value name="DisplayMode">Source</Value>
+    <Value name="ValidatingSchema">XML:Xerces:1.1:Validating</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Documents\ndi_video_codec.xml">
+    <Value name="DisplayMode">Source</Value>
+    <Value name="ValidatingSchema">XML:Xerces:1.1:Validating</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Documents\vancData.CEA708.xml">
+    <Value name="DisplayMode">Source</Value>
+    <Value name="ValidatingSchema">XML:Xerces:1.1:Validating</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Documents\vancData.Multiple.xml">
+    <Value name="ValidatingSchema">XML:Xerces:1.1:Validating</Value>
+    <Value name="DisplayMode">Source</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Documents\vancData.SCTE104.xml">
+    <Value name="ValidatingSchema">XML:Xerces:1.1:Validating</Value>
+    <Value name="DisplayMode">Source</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Documents\ndi_metadata_dmx.xml">
+    <Value name="DisplayMode">Source</Value>
+    <Value name="ValidatingSchema">XML:Xerces:1.1:Validating</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Documents\ntk_ptz_00.xml">
+    <Value name="ValidatingSchema">XML:Xerces:1.1:Validating</Value>
+    <Value name="DisplayMode">Source</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Documents\ntk_ptz_01.xml">
+    <Value name="ValidatingSchema">XML:Xerces:1.1:Validating</Value>
+    <Value name="DisplayMode">Source</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Documents\ntk_ptz_02.xml">
+    <Value name="ValidatingSchema">XML:Xerces:1.1:Validating</Value>
+    <Value name="DisplayMode">Source</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Documents\ntk_ptz_03.xml">
+    <Value name="ValidatingSchema">XML:Xerces:1.1:Validating</Value>
+    <Value name="DisplayMode">Source</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Documents\ntk_ptz_04.xml">
+    <Value name="ValidatingSchema">XML:Xerces:1.1:Validating</Value>
+    <Value name="DisplayMode">Source</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Documents\ntk_ptz_05.xml">
+    <Value name="ValidatingSchema">XML:Xerces:1.1:Validating</Value>
+    <Value name="DisplayMode">Source</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Documents\ntk_ptz_06.xml">
+    <Value name="ValidatingSchema">XML:Xerces:1.1:Validating</Value>
+    <Value name="DisplayMode">Source</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Documents\ntk_ptz_07.xml">
+    <Value name="ValidatingSchema">XML:Xerces:1.1:Validating</Value>
+    <Value name="DisplayMode">Source</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Documents\ntk_ptz_08.xml">
+    <Value name="ValidatingSchema">XML:Xerces:1.1:Validating</Value>
+    <Value name="DisplayMode">Source</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Documents\ntk_ptz_09.xml">
+    <Value name="ValidatingSchema">XML:Xerces:1.1:Validating</Value>
+    <Value name="DisplayMode">Source</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Documents\ntk_ptz_10.xml">
+    <Value name="ValidatingSchema">XML:Xerces:1.1:Validating</Value>
+    <Value name="DisplayMode">Source</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Documents\ntk_ptz_11.xml">
+    <Value name="ValidatingSchema">XML:Xerces:1.1:Validating</Value>
+    <Value name="DisplayMode">Source</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Documents\ntk_ptz_12.xml">
+    <Value name="ValidatingSchema">XML:Xerces:1.1:Validating</Value>
+    <Value name="DisplayMode">Source</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Documents\ntk_ptz_13.xml">
+    <Value name="ValidatingSchema">XML:Xerces:1.1:Validating</Value>
+    <Value name="DisplayMode">Source</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Documents\ntk_ptz_14.xml">
+    <Value name="ValidatingSchema">XML:Xerces:1.1:Validating</Value>
+    <Value name="DisplayMode">Source</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Documents\ntk_ptz_15.xml">
+    <Value name="ValidatingSchema">XML:Xerces:1.1:Validating</Value>
+    <Value name="DisplayMode">Source</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Documents\ntk_ptz_16.xml">
+    <Value name="ValidatingSchema">XML:Xerces:1.1:Validating</Value>
+    <Value name="DisplayMode">Source</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Documents\ntk_ptz_17.xml">
+    <Value name="ValidatingSchema">XML:Xerces:1.1:Validating</Value>
+    <Value name="DisplayMode">Source</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Documents\ntk_ptz_18.xml">
+    <Value name="ValidatingSchema">XML:Xerces:1.1:Validating</Value>
+    <Value name="DisplayMode">Source</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Documents\ndi_metadata_group.xml">
+    <Value name="ValidatingSchema">XML:Xerces:1.1:Validating</Value>
+    <Value name="DisplayMode">Source</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Documents\salray_dmx.xml">
+    <Value name="ValidatingSchema">XML:Xerces:1.1:Validating</Value>
+    <Value name="DisplayMode">Source</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Documents\ndi_format.xml">
+    <Value name="DisplayMode">Source</Value>
+    <Value name="ValidatingSchema">XML:Xerces:1.1:Validating</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Schemas\ndi_capabilities.xsd">
+    <Value name="DisplayMode">Source</Value>
+    <Value name="ValidatingSchema">XSD:Xerces:1.1:Validating</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Schemas\ndi_color_info.xsd">
+    <Value name="DisplayMode">Source</Value>
+    <Value name="ValidatingSchema">XSD:Xerces:1.1:Validating</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Schemas\ndi_format.xsd">
+    <Value name="DisplayMode">Source</Value>
+    <Value name="ValidatingSchema">XSD:Xerces:1.1:Validating</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Schemas\ndi_product.xsd">
+    <Value name="DisplayMode">Source</Value>
+    <Value name="ValidatingSchema">XSD:Xerces:1.1:Validating</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Schemas\ndi_tracking_info.xsd">
+    <Value name="ValidatingSchema">XSD:Xerces:1.1:Validating</Value>
+    <Value name="DisplayMode">Source</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Schemas\ndi_video_codec.xsd">
+    <Value name="DisplayMode">Source</Value>
+    <Value name="ValidatingSchema">XSD:Xerces:1.1:Validating</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Schemas\vancData.xsd">
+    <Value name="ValidatingSchema">XSD:Xerces:1.1:Validating</Value>
+    <Value name="DisplayMode">Source</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Schemas\ndi_metadata_all.xsd">
+    <Value name="ValidatingSchema">XSD:Xerces:1.1:Validating</Value>
+    <Value name="DisplayMode">Source</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Schemas\ntk_ptz.xsd">
+    <Value name="ValidatingSchema">XSD:Xerces:1.1:Validating</Value>
+    <Value name="DisplayMode">Source</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Schemas\ndi_metadata_element.xsd">
+    <Value name="ValidatingSchema">XSD:Xerces:1.1:Validating</Value>
+    <Value name="DisplayMode">Source</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Schemas\ndi_metadata_recv.xsd">
+    <Value name="ValidatingSchema">XSD:Xerces:1.1:Validating</Value>
+    <Value name="DisplayMode">Source</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Schemas\ndi_metadata_send.xsd">
+    <Value name="ValidatingSchema">XSD:Xerces:1.1:Validating</Value>
+    <Value name="DisplayMode">Source</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Schemas\ndi_metadata_video.xsd">
+    <Value name="ValidatingSchema">XSD:Xerces:1.1:Validating</Value>
+    <Value name="DisplayMode">Source</Value>
+  </UserProperties>
+</XmlStudioProjectOptions>

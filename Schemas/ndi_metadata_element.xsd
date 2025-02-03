@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+            xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+            elementFormDefault="qualified"
+            vc:minVersion="1.1">
+
+    <xs:element name="ndi_metadata" type="ndi_metadata_type">
+        <xs:alternative test="@type = 'midi'" type="metadata-midi_type"/>
+        <xs:alternative test="@type = 'dmx'" type="metadata-dmx_type"/>
+    </xs:element>
+
+    <xs:complexType name="ndi_metadata_type">
+        <xs:attribute name="type" type="ndi_metadata_attr_type" use="required" />
+    </xs:complexType>
+
+    <!-- Valid type values for the ndi_metadata element -->
+    <xs:simpleType name="ndi_metadata_attr_type">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="midi" />
+            <xs:enumeration value="dmx" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- MIDI -->
+    <xs:complexType name="metadata-midi_type">
+        <xs:complexContent>
+            <xs:extension base="ndi_metadata_type">
+                <xs:sequence>
+                    <xs:element name="data" type="xs:hexBinary" maxOccurs="unbounded" />
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- DMX -->
+    <xs:complexType name="metadata-dmx_type">
+        <xs:complexContent>
+            <xs:extension base="ndi_metadata_type">
+                <xs:sequence>
+                    <xs:element name="version" minOccurs="0" >
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:pattern value="[0-9]+\.[0-9]+\.[0-9]+" />
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="Universe" maxOccurs="unbounded">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="Stream" minOccurs="0" maxOccurs="unbounded">
+                                    <xs:complexType>
+                                        <xs:sequence>
+                                            <xs:element name="Address" type="dmx_address_type"/>
+                                            <xs:element name="Data" type="xs:hexBinary"/>
+                                        </xs:sequence>
+                                    </xs:complexType>
+                                </xs:element>
+                            </xs:sequence>
+                            <xs:attribute name="id" type="dmx_id_type" use="required" />
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:simpleType name="dmx_id_type">
+        <xs:restriction base="xs:int">
+            <xs:minInclusive value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="dmx_address_type">
+        <xs:restriction base="xs:int">
+            <xs:minInclusive value="1"/>
+            <xs:maxInclusive value="512"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

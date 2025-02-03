@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    elementFormDefault="qualified"
+    xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+    xmlns:xsi="http://www.w3.org/2007/XMLSchema-instance"
+    vc:minVersion="1.1">
+
+    <!-- Connection Metadata -->
+    <xs:include schemaLocation="ndi_product.xsd"/>
+    <xs:include schemaLocation="ndi_capabilities.xsd"/>
+    <xs:include schemaLocation="ndi_format.xsd"/>
+
+    <!-- Generic Metadata -->
+    <xs:include schemaLocation="ndi_metadata_element.xsd"/>
+    <xs:include schemaLocation="ndi_video_codec.xsd"/>
+    <xs:include schemaLocation="ntk_ptz.xsd"/>
+
+    <!-- Video Frame Metadata -->
+    <xs:include schemaLocation="vancData.xsd"/>
+    <xs:include schemaLocation="ndi_color_info.xsd"/>
+    <xs:include schemaLocation="ndi_tracking_info.xsd"/>
+
+    <xs:element name="ndi_metadata_group">
+        <xs:complexType>
+            <xs:choice maxOccurs="unbounded">
+                <xs:element name="ndi_color_info" type="ndi_color_info_type"/>
+                <xs:element name="ndi_tracking_info" type="tracking_info_type" />
+                <xs:element name="vancData" type="vancData_type"/>
+                <xs:element name="ndi_metadata" type="ndi_metadata_type">
+                    <xs:alternative test="@type = 'midi'" type="metadata-midi_type"/>
+                    <xs:alternative test="@type = 'dmx'" type="metadata-dmx_type"/>
+                </xs:element>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

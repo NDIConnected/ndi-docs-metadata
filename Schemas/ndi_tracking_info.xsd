@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+elementFormDefault="qualified"
+xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+xmlns:xsi="http://www.w3.org/2007/XMLSchema-instance"
+vc:minVersion="1.1">
+
+    <xs:element name="ndi_tracking_info" type="tracking_info_type" />
+
+    <xs:complexType name="tracking_info_type">
+        <xs:sequence>
+            <xs:element ref="package" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+        <xs:attribute name="version" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:pattern value="[0-9]+\.[0-9]+\.[0-9]+" />
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:complexType>
+
+    <!-- package: calling alternative definitions, depending on the type value -->
+    <xs:element name="package" type="package_type">
+        <xs:alternative test="@type = 'binary'" type="pkg_binary_type" />
+        <xs:alternative test="@type = 'axis'" type="pkg_axis_type" />
+    </xs:element>
+
+    <xs:complexType name="package_type">
+        <xs:attribute name="type" type="package_attr_type" use="required" />
+        <xs:attribute name="protocol" type="xs:string" use="required" />
+    </xs:complexType>
+
+    <!-- Definition for the package type attribute -->
+    <xs:simpleType name="package_attr_type">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="binary" />
+            <xs:enumeration value="axis" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- The alternative content definitions for a <package> -->
+    <xs:complexType name="pkg_binary_type">
+        <xs:complexContent>
+            <xs:extension base="package_type">
+                <xs:sequence>
+                    <xs:element ref="timestamp" minOccurs="0" maxOccurs="1" />
+                    <xs:element name="data" type="xs:base64Binary" />
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="pkg_axis_type">
+        <xs:complexContent>
+            <xs:extension base="package_type">
+                <xs:sequence>
+                    <xs:element ref="timestamp" minOccurs="0" maxOccurs="1" />
+                    <xs:element ref="axis" minOccurs="0" maxOccurs="unbounded" />
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <!-- timestamp -->
+    <xs:element name="timestamp" type="timestamp_type" />
+    <xs:complexType name="timestamp_type">
+        <xs:simpleContent>
+            <xs:extension base="xs:dateTimeStamp">
+                <xs:attribute name="name" type="xs:string" default="capture" />
+                <xs:attribute name="type" type="xs:string" fixed="xs:dateTimeStamp" />
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <!-- axis: calling alternative definitions, depending on the type value -->
+    <xs:element name="axis" type="axis_type">
+        <xs:alternative test="@type = 'xs:boolean'" type="axis_boolean_type" />
+        <xs:alternative test="@type = 'xs:integer'" type="axis_integer_type" />
+        <xs:alternative test="@type = 'xs:long'" type="axis_long_type" />
+        <xs:alternative test="@type = 'xs:float'" type="axis_float_type" />
+        <xs:alternative test="@type = 'xs:double'" type="axis_double_type" />
+    </xs:element>
+
+    <xs:complexType name="axis_type" mixed="true">
+        <xs:attribute name="name" type="xs:string" use="required" />
+        <xs:attribute name="type" type="axis_attr_type" use="required" />
+    </xs:complexType>
+
+    <!-- Definition for the package type attribute -->
+    <xs:simpleType name="axis_attr_type">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="xs:boolean" />
+            <xs:enumeration value="xs:integer" />
+            <xs:enumeration value="xs:long" />
+            <xs:enumeration value="xs:float" />
+            <xs:enumeration value="xs:double" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- The alternative content definitions for <axis> -->
+    <xs:complexType name="axis_boolean_type">
+        <xs:complexContent>
+            <xs:extension base="axis_type">
+                <xs:attribute name="value" type="xs:boolean" use="required" />
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="axis_integer_type">
+        <xs:complexContent>
+            <xs:extension base="axis_type">
+                <xs:attribute name="value" type="xs:integer" use="required" />
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="axis_long_type">
+        <xs:complexContent>
+            <xs:extension base="axis_type">
+                <xs:attribute name="value" type="xs:long" use="required" />
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="axis_float_type">
+        <xs:complexContent>
+            <xs:extension base="axis_type">
+                <xs:attribute name="value" type="xs:float" use="required" />
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="axis_double_type">
+        <xs:complexContent>
+            <xs:extension base="axis_type">
+                <xs:attribute name="value" type="xs:double" use="required" />
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+</xs:schema>

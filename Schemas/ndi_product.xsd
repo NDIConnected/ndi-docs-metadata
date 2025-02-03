@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="ndi_product" type="ndi_product_type"/>
+    <xs:complexType name="ndi_product_type">
+        <xs:attribute name="long_name" type="xs:string" use="optional" />
+        <xs:attribute name="short_name" type="xs:string" use="optional" />
+        <xs:attribute name="manufacturer" type="xs:string" use="optional" />
+        <xs:attribute name="model_name" type="xs:string" use="optional" />
+        <xs:attribute name="version" type="xs:string" use="optional" />
+        <xs:attribute name="serial" type="xs:string" use="optional" />
+        <xs:attribute name="session_name" type="xs:string" use="optional" />
+    </xs:complexType>
+</xs:schema>

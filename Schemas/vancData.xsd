@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="vancData" type="vancData_type"/>
+    <xs:simpleType name="did_type">
+        <xs:restriction base="xs:unsignedByte">
+            <xs:pattern value="97|65"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="sdid_type">
+        <xs:restriction base="xs:unsignedByte">
+            <xs:pattern value="1|7"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="vancData_type">
+        <xs:sequence>
+            <xs:element name="vancPacket" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:base64Binary">
+                            <xs:attribute type="did_type" name="did" use="required"/>
+                            <xs:attribute type="sdid_type" name="sdid" use="required"/>
+                            <xs:attribute type="xs:unsignedByte" name="line" use="required"/>
+                            <xs:assert test="(@did = 97 and @sdid = 1) or (@did=65 and @sdid = 7)"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="version" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="1.0"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:complexType>
+</xs:schema>

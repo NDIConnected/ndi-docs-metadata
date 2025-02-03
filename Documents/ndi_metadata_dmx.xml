@@ -1,0 +1,22 @@
+﻿<ndi_metadata type="dmx">
+    <version>1.0.0</version>
+    <Universe id="1">
+        <Stream>
+            <Address>1</Address>
+            <Data>01FF0304050607</Data>
+        </Stream>
+        <Stream>
+            <Address>8</Address>
+            <Data>1A10A00234</Data>
+        </Stream>
+    </Universe>
+    <Universe id="2">
+        <Stream>
+            <Address>2</Address>
+            <Data>02FF004567</Data>
+        </Stream>
+    </Universe>
+    <Universe id="3">
+        <!-- No streams for this universe -->
+    </Universe>
+</ndi_metadata>

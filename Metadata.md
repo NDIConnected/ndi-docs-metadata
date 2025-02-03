@@ -92,12 +92,66 @@ passed in a metadata frame to the NDI SDK should begin with the string `ndi_` or
 
 ## Validation
 
-Example XML files and XSD files are provided (or will be soon) allowing standard
-XML validation tools to be used to validate NDI metadata messages.
+### Schema Files
 
-In addition, an application is provided (or will be soon) that will listen for
-metadata from an NDI sender and can be used to validate the formatting and in
-some cases the content of an NDI metadata frame.
+Example XML files and XSD files are provided allowing standard XML validation
+tools to be used to validate NDI metadata messages.  A parser which understands
+XSD version 1.1 is required.  This can be as simple as something like the
+following python code (tested on Debian Bookworm with the python3-xmlschema
+package installed):
+
+```python
+$ python3 -q
+>>> import xmlschema
+>>> schema = xmlschema.XMLSchema11('Schemas/ndi_metadata_all.xsd')
+>>> schema.is_valid('Documents/ndi_color_info.xml')
+True
+>>> schema.is_valid('Documents/vancData.Multiple.xml')
+True
+>>> exit()
+```
+
+Several top-level schema files are provided to assist with validating the
+various metadata streams available.
+
+* `ndi_metadata_all` : A collection of all valid NDI metadata messages,
+  regardless of how or where they are sent
+* `ndi_metadata_recv` : Valid metadata messages received by an NDI receiver
+* `ndi_metadata_send` : Valid metadata messages received by an NDI sender
+* `ndi_metadata_video` : Valid metadata messages received with an NDI video frame
+
+The remaining file in the `Schemas` directory define specific metadata elements
+and are pulled in by the top-level files listed above.
+
+There is a Liquid Studio project file `NDI_Metadata.lxsproj` in the top level
+directory which can be used with the community (or paid) version of Liquid
+Studio to assist with editing and validation of the NDI metadata and schema
+files.
+
+### Schema Limitations
+
+There are a few known limitations to the schema files:
+
+* The logic for the use of the various attributes available under the
+  `ndi_capabilities` element is currently (2025.02.03) incomplete and under
+  review.
+
+* No user defined element name should ever match the regex `[nN][dD][iI].*` or
+  `[nN][tT][kK].*`, which is not currently expressed in the schema files.
+
+* There are currently no specific metadata elements defined for sending with an
+  NDI audio frame.
+
+### XML Files
+
+Typical examples of various NDI metadata frames are provided in the `Documents`
+directory.
+
+### Validation Application
+
+An application is currently (2025.02.03) in development that will listen for
+metadata from an NDI sender or receiver and can be used to validate the
+formatting and in some cases the content of an NDI metadata frame.
 
 ## Metadata Elements
 
@@ -105,6 +159,8 @@ some cases the content of an NDI metadata frame.
 
 * Initial Implementation: NewTek
 * Location: Connection Metadata
+
+Used by both NDI senders and receivers to indicate product details.
 
 ```xml
 <ndi_product
@@ -139,6 +195,10 @@ some cases the content of an NDI metadata frame.
 
 * Initial Implementation: NewTek
 * Location: Connection Metadata
+
+Indicated product capabilities for both NDI senders and receivers.  Most
+capabilities are sender specific (ptz and exposure control) but NDI receivers
+will often have a web_control URL.
 
 ```xml
 <ndi_capabilities
@@ -181,6 +241,8 @@ some cases the content of an NDI metadata frame.
 
 * Initial Implementation: NewTek
 * Location: Connection Metadata
+
+Sent by an NDI receiver to indicate it's preferred or native format.
 
 ```xml
 <ndi_format>
@@ -359,8 +421,8 @@ or
 <package
     type="axis"
     protocol="name of protocol">
-    <!-- optional --> <timestamp...>
-    <axis...>
+    <!-- optional --> <timestamp.../>
+    <axis.../>
 </package>
 ```
 
@@ -636,7 +698,7 @@ W3C has a good overview of the various timed text caption standards including
 links to many of the specifications:
 https://www.w3.org/AudioVideo/TT/docs/TTML-Profiles.html
 
-### PTZ Control Messages
+### PTZ and Control Messages
 
 * Initial Implementation: NewTek
 * Location: Sent via SDK API calls, received as Metadata frames
@@ -705,6 +767,7 @@ Set focus mode and distance:
 * `NDIlib_recv_ptz_focus_speed()`
 
 ```xml
+<ntk_ptz_focus mode="auto"/>
 <ntk_ptz_focus mode="manual" distance="0.485000"/>
 ```
 
@@ -803,6 +866,8 @@ Sets the exposure settings:
 
 ## Undocumented Mysteries
 
+Likely deprecated element names or typos, included here for completeness.
+
 ### `<ntk_ptz_flip>` Element
 
 ```xml
@@ -810,9 +875,9 @@ Sets the exposure settings:
 ```
 
 Referenced in `NDIlib_Send_VirtualPTZ.cpp` but does not appear anywhere in the
-public NDI SDK source code
+NDI SDK source code
 
 ### `<ntk_ptz_white_balance mode="one_push"/>` White Balance
 
 Referenced in `NDIlib_Send_VirtualPTZ.cpp` but does not appear anywhere in the
-public NDI SDK source code which uses "one_shot" instead.
+NDI SDK source code which uses "one_shot" instead.

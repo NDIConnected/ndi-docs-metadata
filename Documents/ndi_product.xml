@@ -1,0 +1,9 @@
+﻿<ndi_product
+    long_name="NDILib Receive Example."
+    short_name="NDILib Receive"
+    manufacturer="CoolCo, Inc."
+    model_name="PBX-42Q"
+    version="1.000.000"
+    serial="ABCDEFG"
+    session_name="My Midday Show"
+/>

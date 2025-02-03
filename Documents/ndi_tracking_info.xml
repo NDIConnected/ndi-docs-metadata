@@ -1,0 +1,45 @@
+﻿<ndi_tracking_info version="1.0.0">
+    <package type="binary" protocol="FreeD">
+        <!-- Timestamp is optional -->
+        <!-- The tag name is optional, if not present we mean capture timestamp -->
+        <timestamp name="capture" type="xs:dateTimeStamp">2022-07-25T13:20:00.123Z</timestamp>
+        <!-- We await binary.base64 string here -->
+        <data>MTIzNDU2Nzg5MDEyMzQ1Njc4OTA=</data>
+    </package>
+    <package type="axis" protocol="FreeD">
+        <!-- Timestamp is optional -->
+        <timestamp name="capture" type="xs:dateTimeStamp">2004-04-12T13:20:00.123-05:00</timestamp>
+        <!-- Axisname is mandatory, the naming must be present and unique for the package -->
+        <!-- The datatype is mandatory! -->
+        <axis name="id" type="xs:integer" value="1" />
+        <axis name="posx" type="xs:integer" value="237" />
+        <axis name="posy" type="xs:integer" value="9356" />
+        <axis name="posz" type="xs:integer" value="44" />
+        <axis name="rotx" type="xs:integer" value="23" />
+        <axis name="roty" type="xs:integer" value="34" />
+        <axis name="rotz" type="xs:integer" value="43" />
+        <axis name="zoom" type="xs:integer" value="12" />
+        <axis name="focus" type="xs:integer" value="6785" />
+        <axis name="iris" type="xs:integer" value="12" />
+        <axis name="extender" type="xs:boolean" value="true" />
+    </package>
+    <package type="axis" protocol="TrackMen">
+        <timestamp name="capture" type="xs:dateTimeStamp">2004-04-12T13:20:00.123Z</timestamp>
+        <axis name="posx" type="xs:float" value="23.3" />
+        <axis name="posy" type="xs:float" value="45.6" />
+        <axis name="posz" type="xs:float" value="44.12223" />
+        <axis name="rotx" type="xs:float" value="34" />
+        <axis name="roty" type="xs:float" value="45" />
+        <axis name="rotz" type="xs:float" value="56.006" />
+        <axis name="zoom" type="xs:integer" value="23" />
+        <axis name="focus" type="xs:integer" value="7877" />
+        <axis name="k1" type="xs:float" value="0.123" />
+        <axis name="k2" type="xs:float" value="1.4" />
+        <axis name="chipX" type="xs:float" value="23" />
+        <axis name="chipY" type="xs:float" value="34" />
+        <axis name="centerX" type="xs:float" value="233" />
+        <axis name="centerY" type="xs:float" value="0.45" />
+    </package>
+ 
+ </ndi_tracking_info>
+ 

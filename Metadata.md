@@ -285,6 +285,7 @@ Sent by an NDI receiver to indicate it's preferred or native format.
 
 * Initial Implementation: Vizrt
 * Location: Video Frame Metadata
+* Initial NDI Version: 6.0
 
 The `<ndi_color_info>` element provides colorimitry details for the associated
 video frame.
@@ -313,6 +314,7 @@ video frame.
 
 * Initial Implementation: NewTek
 * Location: Metadata (all flavors)
+* Initial NDI Version: 6.0 for video frame metadata, 6.1 for generic metadata frames
 
 Properly formatted XML allows only one root element.  If multiple metadata
 elements need to be attached to a single audio or video frame, they should be
@@ -334,6 +336,7 @@ grouped together as child elements of an `ndi_metadata_group` root element.
 
 * Initial Implementation: Vizrt
 * Location: Video Frame Metadata
+* Initial NDI Version: 5.x
 
 ```xml
 <ndi_tracking_info version="1.0.0">
@@ -527,6 +530,10 @@ This requests the NDI library use the specified decoding method for H.264 and
 H.265 NDI video streams.  Note that the internal heuristics should generally be
 allowed to select the codec type in most circumstances.
 
+Note this element can only be sent by an application to an NDI receiver
+instance, this element will never be received in a Metadata frame by an NDI
+sender or receiver instance.
+
 ```xml
 <ndi_video_codec type="hardware"/>
 ```
@@ -603,6 +610,7 @@ The following ancillary data packet types are currently supported:
 
 * Initial Implementation: Lamamix
 * Location: Metadata Frame
+* Initial NDI Version: 6.1
 
 ```xml
 <ndi_metadata type="midi">
@@ -621,6 +629,7 @@ The following ancillary data packet types are currently supported:
 
 * Initial Implementation: Salrayworks
 * Location: Metadata Frame
+* Initial NDI Version: 6.1
 
 ```xml
 <ndi_metadata type="dmx">

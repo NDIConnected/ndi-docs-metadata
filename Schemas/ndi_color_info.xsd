@@ -36,5 +36,4 @@
             <xs:enumeration value="bt_2100"/>
         </xs:restriction>
     </xs:simpleType>
-
 </xs:schema>

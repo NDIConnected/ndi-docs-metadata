@@ -631,7 +631,13 @@ The following ancillary data packet types are currently supported:
 * Location: Metadata Frame
 * Initial NDI Version: 6.1
 
+**NOTE** Some early versions of DMX used the tag `<SALRAY_DMX>` instead of
+`<ndi_metadata type="dmx">`.  Devices receiving DMX via NDI Metadata should look
+for both element names.  Devices sending DMX via NDI metadata should use the
+`<ndi_metadata type="dmx">` element with NDI SDK version 6.1 or newer.
+
 ```xml
+<!-- Devices receiving DMX should also look for the <SALRAY_DMX> Element -->
 <ndi_metadata type="dmx">
   <Universe id="1">
     <Stream>

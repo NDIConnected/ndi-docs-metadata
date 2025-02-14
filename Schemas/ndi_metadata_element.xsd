@@ -4,6 +4,9 @@
             elementFormDefault="qualified"
             vc:minVersion="1.1">
 
+    <!-- DMX Legacy Implementation -->
+    <xs:include schemaLocation="salray_dmx.xsd"/>
+
     <xs:element name="ndi_metadata" type="ndi_metadata_type">
         <xs:alternative test="@type = 'midi'" type="metadata-midi_type"/>
         <xs:alternative test="@type = 'dmx'" type="metadata-dmx_type"/>
@@ -76,4 +79,5 @@
             <xs:maxInclusive value="512"/>
         </xs:restriction>
     </xs:simpleType>
+
 </xs:schema>

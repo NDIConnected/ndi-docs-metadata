@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+            xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+            elementFormDefault="qualified"
+            vc:minVersion="1.1">
+
+    <!-- DMX Legacy Implementation -->
+    <xs:element name="SALRAY_DMX" type="legacy-dmx_type"/>
+
+    <xs:complexType name="legacy-dmx_type">
+        <xs:sequence>
+            <xs:element name="version" minOccurs="0" >
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value="[0-9]+\.[0-9]+\.[0-9]+" />
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="Universe" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Stream" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="Address" type="legacy_dmx_address_type"/>
+                                    <xs:element name="Data" type="xs:hexBinary"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:attribute name="id" type="legacy_dmx_id_type" use="required" />
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="legacy_dmx_id_type">
+        <xs:restriction base="xs:int">
+            <xs:minInclusive value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="legacy_dmx_address_type">
+        <xs:restriction base="xs:int">
+            <xs:minInclusive value="1"/>
+            <xs:maxInclusive value="512"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

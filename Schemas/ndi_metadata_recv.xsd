@@ -21,6 +21,7 @@
                     <xs:alternative test="@type = 'midi'" type="metadata-midi_type"/>
                     <xs:alternative test="@type = 'dmx'" type="metadata-dmx_type"/>
                 </xs:element>
+                <xs:element name="SALRAY_DMX" type="legacy-dmx_type"/>
             </xs:choice>
         </xs:complexType>
     </xs:element>

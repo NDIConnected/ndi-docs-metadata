@@ -1,0 +1,7 @@
+<ndi_format>
+    <video_format xres="1920" yres="1080"
+                frame_rate_n="60000" frame_rate_d="1001"
+                aspect_ratio="1.77778" progressive="true"
+  />
+    <audio_format no_channels="4" sample_rate="48000"/>
+</ndi_format>

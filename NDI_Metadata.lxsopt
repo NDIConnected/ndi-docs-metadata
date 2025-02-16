@@ -4,7 +4,7 @@
   <File>.\Schemas\ndi_metadata_all.xsd</File>
   <File>.\Schemas\ndi_metadata_send.xsd</File>
   <File>.\Schemas\ndi_metadata_video.xsd</File>
-  <ActiveWindow>ndi_metadata_video.xsd</ActiveWindow>
+  <ActiveWindow>ndi_metadata_recv.xsd</ActiveWindow>
   <ProjectTreeState />
   <UserProperties sourceUri=".\Documents\ndi_capabilities.xml">
     <Value name="DisplayMode">Source</Value>
@@ -128,6 +128,9 @@
   </UserProperties>
   <UserProperties sourceUri=".\Documents\salray_dmx.xml">
     <Value name="ValidatingSchema">XML:Xerces:1.1:Validating</Value>
+    <Value name="DisplayMode">Source</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Documents\ndi_format.xml">
     <Value name="DisplayMode">Source</Value>
   </UserProperties>
   <UserProperties sourceUri=".\Schemas\ndi_capabilities.xsd">

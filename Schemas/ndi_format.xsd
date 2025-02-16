@@ -2,8 +2,8 @@
 <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
     <xs:element name="ndi_format" type="ndi_format_type"/>
     <xs:complexType name="ndi_format_type">
-        <xs:sequence>
-            <xs:element name="video_format" minOccurs="0">
+        <xs:all minOccurs="1">
+            <xs:element name="video_format">
                 <xs:complexType>
                     <xs:attribute name="xres" type="xs:int" use="required" />
                     <xs:attribute name="yres" type="xs:int" use="required" />
@@ -13,12 +13,12 @@
                     <xs:attribute name="progressive" type="xs:boolean" use="required" />
                 </xs:complexType>
             </xs:element>
-            <xs:element name="audio_format" minOccurs="0">
+            <xs:element name="audio_format">
                 <xs:complexType>
                     <xs:attribute name="no_channels" type="xs:int" use="required" />
                     <xs:attribute name="sample_rate" type="xs:int" use="required" />
                 </xs:complexType>
             </xs:element>
-        </xs:sequence>
+        </xs:all>
     </xs:complexType>
 </xs:schema>

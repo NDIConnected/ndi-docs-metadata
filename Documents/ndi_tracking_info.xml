@@ -1,4 +1,4 @@
-﻿<ndi_tracking_info version="1.0.0">
+<ndi_tracking_info version="1.0.0">
     <package type="binary" protocol="FreeD">
         <!-- Timestamp is optional -->
         <!-- The tag name is optional, if not present we mean capture timestamp -->

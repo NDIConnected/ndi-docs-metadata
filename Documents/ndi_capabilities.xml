@@ -1,4 +1,4 @@
-﻿<ndi_capabilities
+<ndi_capabilities
     web_control="http://ndi.video/"
     ntk_ptz="true"
     ntk_pan_tilt="true"

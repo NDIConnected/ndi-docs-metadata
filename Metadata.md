@@ -42,6 +42,8 @@ particular video frame.  Example metadata elements that should be passed as
 video frame metadata include `<ndi_tracking_info>`, `<ndi_color_info>`, and
 `<vancData>`.
 
+**FIXME** Comment regarding full vs preview streams and SDK vs. ASDK behavior!
+
 ## NDI Metadata and XML
 
 While NDI metadata is formatted as XML, there are some differences between XML
@@ -87,8 +89,8 @@ XML namespaces are not supported in NDI metadata frames.
 ### XML Element Names
 
 With the exception of element names defined in this document, no XML element
-passed in a metadata frame to the NDI SDK should begin with the string `ndi_` or
-`ntk_` (or any permutation of capitalization,eg: `NDi_`).
+passed in a metadata frame to the NDI SDK should begin with the string `ndi` or
+`ntk` (or any permutation of capitalization,eg: `Ndi`).
 
 ## Validation
 
@@ -134,10 +136,12 @@ There are a few known limitations to the schema files:
 
 * The logic for the use of the various attributes available under the
   `ndi_capabilities` element is currently (2025.02.03) incomplete and under
-  review.
+  review (eg: support for some capabilities implies support for others, with the
+  details of this matrix still being determined).
 
 * No user defined element name should ever match the regex `[nN][dD][iI].*` or
-  `[nN][tT][kK].*`, which is not currently expressed in the schema files.
+  `[nN][tT][kK].*`, which is not currently expressed in the schema files.  The
+  python validation script does check for this programatically.
 
 * There are currently no specific metadata elements defined for sending with an
   NDI audio frame.
@@ -152,6 +156,27 @@ directory.
 An application is currently (2025.02.03) in development that will listen for
 metadata from an NDI sender or receiver and can be used to validate the
 formatting and in some cases the content of an NDI metadata frame.
+
+The python validation app requires the xmlschema and ndi-python libraries.  The
+xmlschema library can typically be installed via OS packages or using pip, but
+the ndi-python library currently needs to be installed from source.  Since the
+source repository includes a git submodule, it does not install properly using
+pip:
+
+```sh
+# Linux users may need to provide a path to the NDI SDK directory
+export NDI_SDK_DIR="/path/to/NDI SDK Directory"
+
+# Download the source code from github and populate git submodules
+git clone --recursive https://github.com/buresu/ndi-python.git
+
+# Build the wheel package for installation
+cd ndi-python
+python3 setup.py bdist_wheel
+
+# Install the wheel package
+python3 -m pip install dist/ndi_python-*.whl
+```
 
 ## Metadata Elements
 
@@ -398,8 +423,8 @@ grouped together as child elements of an `ndi_metadata_group` root element.
 
 * version
   - The `<ndi_tracking_info>` element must have a version attribute
-  - The version attribute is defined as string with the regex format: `[0-9]+.[0-
-9]+.[0-9]+`
+  - The version attribute is defined as string with the regex format:
+    `[0-9]+.[0-9]+.[0-9]+`
 
 #### `<ndi_tracking_info>` Children
 

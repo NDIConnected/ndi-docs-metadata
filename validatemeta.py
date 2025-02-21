@@ -1,22 +1,20 @@
 #!/usr/bin/env python3
 
-import getopt, sys
+import getopt, sys, signal
 from enum import Enum, auto
 import xml.etree.ElementTree as ET
 import xmlschema
 import re
 
-class e_mode(Enum):
-    ANY = auto()
-    RECV = auto()
-    SEND = auto()
-    VIDEO = auto()
-    AUDIO = auto()
+import NDIlib as ndi
 
 usage_text=f"""Usage:
-{sys.argv[0]} This is a test
-    line 2
-    line 3
+{sys.argv[0]} [-r | -s ] -n <ndi_name>
+    Verify NDI Metadata from a remote NDI sender or receiver
+    -r : Create an NDI receiver connected to <ndi_name> sender and validate any
+         metadata received via Metadata, Audio, or Video frames
+    -s : Create an NDI sender named <ndi_name> and validate any metadata sent by
+         connected receivers
 {sys.argv[0]} [-a | -r | -s | -v] -f <filename>
 {sys.argv[0]} [-a | -r | -s | -v] <xml_data>
     Verify contents of <filename> or <xml_data> string is proper NDI Metadata
@@ -29,6 +27,14 @@ usage_text=f"""Usage:
 
 def usage():
     print(usage_text)
+
+# Enum for operating mode
+class e_mode(Enum):
+    ANY = auto()
+    RECV = auto()
+    SEND = auto()
+    VIDEO = auto()
+    AUDIO = auto()
 
 # Make schemas global so we only have to load them once
 schema_all = None
@@ -49,6 +55,23 @@ count_format = 0
 # so we only compile it once
 # No user defined element names can start with ndi or ntk, ignoring case
 invalid_re = re.compile ('^(ndi|ntk).*$', re.IGNORECASE)
+
+do_exit = False
+
+# signal handler for Ctrl-C
+def sig_handler(sig, frame):
+    global do_exit
+    do_exit = True
+
+# Register signal handler
+signal.signal(signal.SIGINT, sig_handler)
+
+def print_status_rx(ndi_recv):
+    # Print status
+    print(f"PTZ: {ndi.recv_ptz_is_supported(ndi_recv)}")
+    print(f"Rec: {ndi.recv_recording_is_supported(ndi_recv)}")
+    print(f"Web: {ndi.recv_get_web_control(ndi_recv)}")
+    print(f"KVM: Unknown")
 
 def check_user(element):
     name = element.tag
@@ -86,6 +109,9 @@ def check_one(element, schema):
         check_user(element)
 
 def parse_multi(root, schema=None):
+    if root == None:
+        return
+
     # See if we have multiple elements in an ndi_metadata_group
     if root.tag != 'ndi_metadata_group':
         # Just one tag, see if it's valid
@@ -109,6 +135,81 @@ def parse_xml(xml):
     print ("XML is well formed")
     return root
 
+def parse_ndi_rx(ndi_name):
+
+    # Turn ndi_name into a source
+    src = ndi.Source()
+    src.ndi_name = ndi_name
+
+    # Setup receiver parameters
+    ndi_recv_create = ndi.RecvCreateV3()
+    ndi_recv_create.source_to_connect_to = src
+    ndi_recv_create.color_format = ndi.RECV_COLOR_FORMAT_FASTEST
+    # We are not displaying video, so use the preview stream to save resources
+    ndi_recv_create.bandwidth = ndi.RECV_BANDWIDTH_LOWEST
+    ndi_recv_create.allow_video_fields = True
+
+    # Create the NDI receiver
+    ndi_recv = ndi.recv_create_v3(ndi_recv_create)
+
+    if ndi_recv is None:
+        print("Could not create NDI receiver!")
+        sys.exit(3)
+
+    while do_exit == False:
+        t, v, a, m = ndi.recv_capture_v3(ndi_recv, 500)
+
+        match t:
+            case ndi.FRAME_TYPE_NONE:
+                print('.', end='', flush=True)
+            case ndi.FRAME_TYPE_VIDEO:
+                print('v', end='', flush=True)
+                if v.metadata:
+                    print(v.metadata)
+                    root = parse_xml(v.metadata)
+                    parse_multi(root, schema_video)
+                ndi.recv_free_video_v2(ndi_recv, v)
+            case ndi.FRAME_TYPE_AUDIO:
+                print('a', end='', flush=True)
+                if a.metadata:
+                    print(a.metadata)
+                    root = parse_xml(a.metadata)
+                    parse_multi(root, None)
+                ndi.recv_free_audio_v3(ndi_recv, a)
+            case ndi.FRAME_TYPE_METADATA:
+                print('m', end='', flush=True)
+                print(m.data)
+                root = parse_xml(m.data)
+                parse_multi(root, schema_recv)
+                ndi.recv_free_metadata(ndi_recv, m)
+            case ndi.FRANE_TYPE_STATUS_CHANGE:
+                print("Status changed:")
+                print_status_rx(ndi_recv)
+
+    print("")
+    ndi.recv_destroy(ndi_recv)
+
+def parse_ndi_tx(ndi_name):
+    send_settings = ndi.SendCreate()
+    send_settings.ndi_name = ndi_name
+
+    ndi_send = ndi.send_create(send_settings)
+    if ndi_send is None:
+        print("Could not create NDI sender!")
+        sys.exit(3)
+
+    m = ndi.MetadataFrame()
+
+    while do_exit == False:
+        ndi.send_capture(ndi_send, m, 500)
+        if m.data:
+            print(m.data)
+            root = parse_xml(m.data)
+            parse_multi(root, schema_send)
+            ndi.send_free_metadata(ndi_send, m)
+
+    ndi.send_destroy(ndi_send)
+
 def print_stats():
     print(f"Bad XML: {count_badxml}")
     print(f"Valid packets: {count_valid}")
@@ -123,9 +224,10 @@ def main():
     # Defaults
     mode = e_mode.ANY
     filename = None
+    ndiname = None
 
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "arsvf:h", ["help"])
+        opts, args = getopt.getopt(sys.argv[1:], "arsvf:hn:", ["help"])
     except getopt.GetoptError as err:
         # print help information and exit:
         print(err)  # will print something like "option -a not recognized"
@@ -141,13 +243,17 @@ def main():
             mode = e_mode.SEND
         elif o == "-v":
             mode = e_mode.VIDEO
+        elif o == "-n":
+            ndiname = a
         elif o == "-f":
             filename = a
         elif o in ("-h", "--help"):
             usage()
             sys.exit()
         else:
-            assert False, "unhandled option"
+            print("Unexpected option!")
+            usage()
+            sys.exit(2)
 
     global schema_all
     global schema_recv
@@ -169,6 +275,24 @@ def main():
         # case e_mode.AUDIO:
 
     # FIXME: Check for NDI operation!
+    if ndiname != None:
+        if not ndi.initialize():
+            print("Could not initialize NDI library!")
+            sys.exit(3)
+
+        match mode:
+            case e_mode.RECV:
+                parse_ndi_rx(ndiname)
+            case e_mode.SEND:
+                parse_ndi_tx(ndiname)
+            case _:
+                print("Invalid combination of options!")
+                usage()
+                sys.exit(2)
+
+        print_stats()
+        ndi.destroy()
+        sys.exit(0)
 
     if filename:
         with open(filename, 'r') as file:
@@ -180,7 +304,7 @@ def main():
 
     if root == None:
         print_stats()
-        sys.exit()
+        sys.exit(0)
 
     match mode:
         case e_mode.ANY:
@@ -195,8 +319,8 @@ def main():
             # No official metadata for audio, just check for valid user tags
             parse_multi(root)
 
-
     print_stats()
+    sys.exit(0)
 
 if __name__ == "__main__":
     main()

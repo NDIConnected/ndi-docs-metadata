@@ -42,7 +42,17 @@ particular video frame.  Example metadata elements that should be passed as
 video frame metadata include `<ndi_tracking_info>`, `<ndi_color_info>`, and
 `<vancData>`.
 
-**FIXME** Comment regarding full vs preview streams and SDK vs. ASDK behavior!
+Applications using video frame metadata need to be aware that individual video
+frames can be dropped or duplicated, potentially causing missing or replicated
+metadata.  This behavior is typically caused by using an NDI frame synchronizer
+instance, which will drop or duplicate video frames occasionally to match frame
+rates between the NDI sender and receiver.  In addition, prior to NDI 5.x the
+preview video stream was limited to 30 fps, so preview streams created from full
+streams with greater than 30 fps would drop video frames to meet the 30 fps
+maximum.  Starting with NDI 5.0, preview streams are now sent using the same
+frame rate as the full stream.  Users of the ASDK need to insure any required
+video frame metadata is attached to both the full and the preview frame
+submitted to the ASDK.
 
 ## NDI Metadata and XML
 
@@ -92,15 +102,19 @@ With the exception of element names defined in this document, no XML element
 passed in a metadata frame to the NDI SDK should begin with the string `ndi` or
 `ntk` (or any permutation of capitalization,eg: `Ndi`).
 
-## Validation
+## XML Validation
 
 ### Schema Files
 
 Example XML files and XSD files are provided allowing standard XML validation
 tools to be used to validate NDI metadata messages.  A parser which understands
-XSD version 1.1 is required.  This can be as simple as something like the
-following python code (tested on Debian Bookworm with the python3-xmlschema
-package installed):
+XSD version 1.1 is required.  Freely available tools which support XSD 1.1
+include Xerces2 (Java) from Apache.org and the Python3 xmlschema library by
+SISSA (Scuola Internazionale Superiore di Studi Avanzati).  The community
+version of the Liquid Studio XML editor is a convient editing and validation
+environment for the Xerces2 Java library.  Validation using python can be as
+simple as a few lines of code (tested on Debian Bookworm with the
+python3-xmlschema package installed):
 
 ```python
 $ python3 -q
@@ -117,7 +131,7 @@ Several top-level schema files are provided to assist with validating the
 various metadata streams available.
 
 * `ndi_metadata_all` : A collection of all valid NDI metadata messages,
-  regardless of how or where they are sent
+  regardless of how or where they are sent or received
 * `ndi_metadata_recv` : Valid metadata messages received by an NDI receiver
 * `ndi_metadata_send` : Valid metadata messages received by an NDI sender
 * `ndi_metadata_video` : Valid metadata messages received with an NDI video frame
@@ -153,17 +167,21 @@ directory.
 
 ### Validation Application
 
-An application is currently (2025.02.03) in development that will listen for
-metadata from an NDI sender or receiver and can be used to validate the
-formatting and in some cases the content of an NDI metadata frame.
+A python application is provided that will listen for metadata from an NDI
+sender or receiver and can be used to validate the formatting and in some cases
+the content of an NDI metadata frame.  This application can also validate XML
+metadata from a file or provided on the command line (be careful with shell
+expansion and quoting when passing metadata on the command line).
 
 The python validation app requires the xmlschema and ndi-python libraries.  The
 xmlschema library can typically be installed via OS packages or using pip, but
 the ndi-python library currently needs to be installed from source.  Since the
 source repository includes a git submodule, it does not install properly using
-pip:
+pip.
 
 ```sh
+# Build and install ndi-python library from source
+
 # Linux users may need to provide a path to the NDI SDK directory
 export NDI_SDK_DIR="/path/to/NDI SDK Directory"
 
@@ -569,8 +587,6 @@ sender or receiver instance.
   - Video codec type
   - Valid values are "hardware" and "software"
 
-## Proposed new metadata messages
-
 ### `<vancData>` Element (CEA-708 & SCTE-104)
 
 * Initial Implementation: ToolsOnAir
@@ -630,25 +646,6 @@ The following ancillary data packet types are currently supported:
   - The ancillary packet SDID (Secondary Data Identifier)
 * line
   - The line number the ancillary data packet was received on
-
-### Midi `<ndi_metadata type="midi">` Element
-
-* Initial Implementation: Lamamix
-* Location: Metadata Frame
-* Initial NDI Version: 6.1
-
-```xml
-<ndi_metadata type="midi">
-  <data>903C403D20</data>
-</ndi_metadata>
-```
-
-#### Midi `<ndi_metadata type="midi">` Children
-
-* data
-  - Hexidecimal representation of a midi message
-  - Data is read left to right (eg: 0x90 is the first byte transmitted and 0x20
-    is the last byte to be trasmitted)
 
 ### DMX `<ndi_metadata type="dmx">` Element
 
@@ -712,6 +709,35 @@ for both element names.  Devices sending DMX via NDI metadata should use the
   - Data is read left to right (eg: 0x01 is the first byte transmitted for
     universe 1, address 1
 
+## Proposed new Metadata Elements
+
+The following elements have been defined but are not yet implemented in real
+world applications and thus might change before implementation is finalized.  If
+you have any metadata elements you would like to see standardized across the NDI
+ecosystem, please submit a proposal at the following URL for potential addition
+to this set of stadards:
+
+https://ndi.video/tech/ndi-for-metadata/submit-metadata-proposal/
+
+### Midi `<ndi_metadata type="midi">` Element
+
+* Initial Implementation: Lamamix
+* Location: Metadata Frame
+* Initial NDI Version: 6.1
+
+```xml
+<ndi_metadata type="midi">
+  <data>903C403D20</data>
+</ndi_metadata>
+```
+
+#### Midi `<ndi_metadata type="midi">` Children
+
+* data
+  - Hexidecimal representation of a midi message
+  - Data is read left to right (eg: 0x90 is the first byte transmitted and 0x20
+    is the last byte to be trasmitted)
+
 ### Timed Text Captions
 
 * Initial Implementation: Various standards bodies
@@ -738,7 +764,16 @@ W3C has a good overview of the various timed text caption standards including
 links to many of the specifications:
 https://www.w3.org/AudioVideo/TT/docs/TTML-Profiles.html
 
-### PTZ and Control Messages
+As a general rule, it is suggested that applications sending timed-text captions
+use the minimum set of features necessary for full operation.  Receivers should
+be able to process any Well Formed XML, ignoring any elements or attributes they
+do not currenntly implement.
+
+If you are interested in supporting any of the timed-text captioning solutions
+in real-world workflows, the NDI team would be happy to coordinate with you to
+help insure consistency and interoperability across the NDI ecosystem.
+
+## PTZ and Control Messages
 
 * Initial Implementation: NewTek
 * Location: Sent via SDK API calls, received as Metadata frames
@@ -917,7 +952,7 @@ Likely deprecated element names or typos, included here for completeness.
 Referenced in `NDIlib_Send_VirtualPTZ.cpp` but does not appear anywhere in the
 NDI SDK source code
 
-### `<ntk_ptz_white_balance mode="one_push"/>` White Balance
+### `<ntk_ptz_white_balance mode="one_push"/>`
 
 Referenced in `NDIlib_Send_VirtualPTZ.cpp` but does not appear anywhere in the
 NDI SDK source code which uses "one_shot" instead.

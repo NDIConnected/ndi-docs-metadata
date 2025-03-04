@@ -2,7 +2,7 @@
 
 ## `<ndi_product>` Element
 
-* Initial Implementation: NewTek
+* Initial Implementation: Vizrt
 * Location: Connection Metadata
 
 Used by both NDI senders and receivers to indicate product details.
@@ -32,12 +32,10 @@ Used by both NDI senders and receivers to indicate product details.
 
 ## `<ndi_capabilities>` Element
 
-* Initial Implementation: NewTek
+* Initial Implementation: Vizrt
 * Location: Connection Metadata
 
-Indicated product capabilities for both NDI senders and receivers. Most
-capabilities are sender specific (ptz and exposure control) but NDI receivers
-will often have a web\_control URL.
+Indicated product capabilities for both NDI senders and receivers. Most capabilities are sender specific (ptz and exposure control) but NDI receivers will often have a web\_control URL.
 
 ```xml
 <ndi_capabilities
@@ -64,7 +62,7 @@ will often have a web\_control URL.
 
 ## `<ndi_format>` Element
 
-* Initial Implementation: NewTek
+* Initial Implementation: Vizrt
 * Location: Connection Metadata
 
 Sent by an NDI receiver to indicate it's preferred or native format.
@@ -88,7 +86,7 @@ At least one of the following child elements is required.
 | `<video_format>` | Video format details |
 | `<audio_format>` | Audio format details |
 
-##### `<video_format>` Attributes
+**`<video_format>` Attributes**
 
 | Attribute      | Description                                                                |
 | -------------- | -------------------------------------------------------------------------- |
@@ -99,7 +97,7 @@ At least one of the following child elements is required.
 | aspect\_ratio  | The picture aspect ratio, 0 means square pixel                             |
 | progressive    | Indicates progressive format when "true" or interlaced format when "false" |
 
-##### `<audio_format>` Attributes
+**`<audio_format>` Attributes**
 
 | Attribute    | Description                            |
 | ------------ | -------------------------------------- |
@@ -112,8 +110,7 @@ At least one of the following child elements is required.
 * Location: Video Frame Metadata
 * Initial NDI Version: 6.0
 
-The `<ndi_color_info>` element provides colorimitry details for the associated
-video frame.
+The `<ndi_color_info>` element provides colorimitry details for the associated video frame.
 
 ```xml
 <ndi_color_info
@@ -133,13 +130,11 @@ video frame.
 
 ## `<ndi_metadata_group>` Element
 
-* Initial Implementation: NewTek
+* Initial Implementation: Vizrt
 * Location: Metadata (all flavors)
 * Initial NDI Version: 6.0 for video frame metadata, 6.1 for generic metadata frames
 
-Properly formatted XML allows only one root element. If multiple metadata
-elements need to be attached to a single audio or video frame, they should be
-grouped together as child elements of an `ndi_metadata_group` root element.
+Properly formatted XML allows only one root element. If multiple metadata elements need to be attached to a single audio or video frame, they should be grouped together as child elements of an `ndi_metadata_group` root element.
 
 ```xml
 <ndi_metadata_group>
@@ -159,7 +154,7 @@ grouped together as child elements of an `ndi_metadata_group` root element.
 * Location: Video Frame Metadata
 * Initial NDI Version: 5.x
 
-```xml
+````xml
 <ndi_tracking_info version="1.0.0">
     <package type="binary" protocol="FreeD">
         <!-- Timestamp is optional -->
@@ -214,7 +209,8 @@ grouped together as child elements of an `ndi_metadata_group` root element.
         <axis name="centerY" type="xs:float" value="0.45" />
     </package>
 </ndi_tracking_info>
-```
+````
+
 #### `<ndi_tracking_info>` Attributes
 
 | Attribute | Description                                                                                                                                                |
@@ -266,11 +262,9 @@ or
 | `<data>`      | If the type of the is binary then exactly one `<data>` element is mandatory.   |
 | `<axis>`      | If the type of the is axis then one or more `<axis>` elements must be present. |
 
-##### `<timestamp>` Element
+**`<timestamp>` Element**
 
-When present, the element can provide some additional timestamp information
-different from the timestamp on the NDI video frame. This element contains no
-text and has no children.
+When present, the element can provide some additional timestamp information different from the timestamp on the NDI video frame. This element contains no text and has no children.
 
 ```xml
 <timestamp
@@ -279,29 +273,25 @@ text and has no children.
 </timestamp>
 ```
 
-##### `<timestamp>` Attributes
+**`<timestamp>` Attributes**
 
 | Attribute | Description                                                                                                                                                                                                                                                                                                                                   |
 | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | name      | Is optional and defines the process step when the timestamp was taken. If name is not given, the timestamp will be marked as capture which means the time the video frame was recorded. If the name attribute is not capture, then the timestamp on the NDI video frame is taken as capture timestamp. _Please see Appendix Timestamp names._ |
 | type      | Is mandatory and has a fixed value of xs:dateTimeStamp. The timestamp value must follow the xs:dateTimeStamp format. _Please see_ [_https://www.w3.org/TR/xmlschema11-2/#dateTimeStamp_](https://www.w3.org/TR/xmlschema11-2/#dateTimeStamp)_. A UTC timestamp is preferable._                                                                |
 
-##### `<data>` Element
+**`<data>` Element**
 
-The element contains the binary representation of the protocol. This element has
-no attributes and no children. The text value must be encoded in the
-xs:base64Binary format. Please see
-[https://www.w3schools.com/xml/schema\_dtypes\_misc.asp](https://www.w3schools.com/xml/schema_dtypes_misc.asp)
+The element contains the binary representation of the protocol. This element has no attributes and no children. The text value must be encoded in the xs:base64Binary format. Please see [https://www.w3schools.com/xml/schema\_dtypes\_misc.asp](https://www.w3schools.com/xml/schema_dtypes_misc.asp)
 
 ```xml
 <!-- We expect binary.base64 string here -->
 <data> MTIzNDU2Nzg5MDEyMzQ1Njc4OTA=</data>
 ```
 
-##### `<axis>` Element
+**`<axis>` Element**
 
-The `<axis>` element contains data for one axis. This element contains no text
-and has no children.
+The `<axis>` element contains data for one axis. This element contains no text and has no children.
 
 ```xml
 <!-- name and type are mandatory! -->
@@ -309,7 +299,7 @@ and has no children.
 <axis name="posx" type="xs:integer" value="23" />
 ```
 
-##### `<axis>` Attributes
+**`<axis>` Attributes**
 
 | Attribute | Description                                                                                                                                                                                                                                                                                                           |
 | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -322,16 +312,11 @@ and has no children.
 * Initial Implementation: NewTek
 * Location: Metadata
 
-Sent via NDIlib\_recv\_send\_metadata() by the application which created the NDI
-receive instance.
+Sent via NDIlib\_recv\_send\_metadata() by the application which created the NDI receive instance.
 
-This requests the NDI library use the specified decoding method for H.264 and
-H.265 NDI video streams. Note that the internal heuristics should generally be
-allowed to select the codec type in most circumstances.
+This requests the NDI library use the specified decoding method for H.264 and H.265 NDI video streams. Note that the internal heuristics should generally be allowed to select the codec type in most circumstances.
 
-Note this element can only be sent by an application to an NDI receiver
-instance, this element will never be received in a Metadata frame by an NDI
-sender or receiver instance.
+Note this element can only be sent by an application to an NDI receiver instance, this element will never be received in a Metadata frame by an NDI sender or receiver instance.
 
 ```xml
 <ndi_video_codec type="hardware"/>

@@ -33,9 +33,22 @@ This mechanism should **NOT** be used to tunnel arbitrary SDI ancillary data whi
 
 **`vancPacket` Element**
 
-The `vancPacket` element provides details for one ancillary data packet. The ancillary packet data is base64 encoded while the ancillary packet header details are included as attributes of the vancPacket element.
+The `vancPacket` element provides details for one SMPTE ST-291 ancillary data
+packet.  The various ST-291 elements map to the `vancPacket` element as follows:
 
-DID and SDID values and ancillary data content are per SMPTE standards ST-334 (CEA-708) and ST-2010 (SCTE-104)
+* ADF: Ancillary Data Flag: Not transmitted
+* DID: Data ID: Sent as an attribute
+* SDID: Secondary DID: Sent as an attribute
+* DC: Data Count: Not transmitted
+* UDW: User Data Words: Sent as text content, 8-bit, base64 encoded
+* CS: Checksum: Not transmitted
+
+Note that the user data word content of the ancillary data packet is sent as
+base64 encoded 8-bit data.  Bits 8 (parity) and 9 (NOT bit 8) are not
+transmitted.
+
+DID and SDID values and ancillary data content are per SMPTE standards ST-334
+(CEA-708) and ST-2010 (SCTE-104).
 
 The following ancillary data packet types are currently supported:
 

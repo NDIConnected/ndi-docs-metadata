@@ -1,10 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <XmlStudioProjectOptions Version="20.7.17.13201">
-  <File>.\Schemas\ndi_metadata_recv.xsd</File>
-  <File>.\Schemas\ndi_metadata_all.xsd</File>
-  <File>.\Schemas\ndi_metadata_send.xsd</File>
+  <File>.\Schemas\ndi_metadata_element.xsd</File>
   <File>.\Schemas\ndi_metadata_video.xsd</File>
-  <ActiveWindow>ndi_metadata_all.xsd</ActiveWindow>
+  <File>.\Schemas\ndi_metadata_send.xsd</File>
+  <File>.\Schemas\ndi_metadata_all.xsd</File>
+  <File>.\Schemas\ndi_metadata_recv.xsd</File>
+  <File>.\Schemas\salray_dmx.xsd</File>
+  <ActiveWindow>ndi_metadata_eleme...xsd</ActiveWindow>
   <ProjectTreeState />
   <UserProperties sourceUri=".\Documents\ndi_capabilities.xml">
     <Value name="DisplayMode">Source</Value>

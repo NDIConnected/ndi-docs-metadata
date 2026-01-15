@@ -1,7 +1,8 @@
 # PTZ and Control Messages
 
-* Initial Implementation: NewTek
-* Location: Sent via SDK API calls, received as Metadata frames
+> Initial Implementation: **NewTek**
+>
+> Location: **Sent via SDK API calls, received as Metadata frames**
 
 ### `<ntk_ptz_zoom>` Element
 

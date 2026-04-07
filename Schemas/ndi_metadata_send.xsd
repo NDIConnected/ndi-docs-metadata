@@ -12,6 +12,7 @@
     <!-- Generic Metadata -->
     <xs:include schemaLocation="ndi_metadata_element.xsd"/>
     <xs:include schemaLocation="ntk_ptz.xsd"/>
+    <xs:include schemaLocation="ndi_kvm.xsd"/>
 
     <xs:element name="ndi_metadata_group">
         <xs:complexType>

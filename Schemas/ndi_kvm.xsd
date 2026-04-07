@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Created with Liquid Studio (https://www.liquid-technologies.com) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    elementFormDefault="qualified"
+    xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+    xmlns:xsi="http://www.w3.org/2007/XMLSchema-instance"
+    vc:minVersion="1.1">
+
+    <xs:element name="ndi_kvm" type="ndi_kvm_type"/>
+    <xs:complexType name="ndi_kvm_type">
+        <xs:attribute name="d" type="xs:base64Binary" use="optional"/>
+        <xs:attribute name="u" type="xs:base64Binary" use="optional"/>
+        <!-- Exactly one u or d attribute should be present -->
+        <xs:assert test="(@d and not(@u)) or (not(@d) and @u)"/>
+    </xs:complexType>
+</xs:schema>

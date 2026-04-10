@@ -61,6 +61,7 @@ Indicated product capabilities for both NDI senders and receivers. Most capabili
 | ntk\_focus="true"          | The NDI sender supports manual focus control.                                                                                                                                                                                         |
 | ntk\_autofocus="true"      | The NDI sender supports setting auto focus.                                                                                                                                                                                           |
 | ntk\_preset\_speed="true"  | The NDI sender has preset speed support.                                                                                                                                                                                              |
+| ntk\_kvm="true"            | The NDI sender supports KVM control.                                                                                                                                                                                                 |
 
 ## `<ndi_format>` Element
 

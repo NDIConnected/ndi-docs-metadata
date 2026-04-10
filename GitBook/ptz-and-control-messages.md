@@ -4,7 +4,7 @@
 >
 > Location: **Sent via SDK API calls, received as Metadata frames**
 
-### `<ntk_ptz_zoom>` Element
+## `<ntk_ptz_zoom>` Element
 
 Set zoom to an absolute value: `NDIlib_recv_ptz_zoom()`
 
@@ -18,7 +18,7 @@ Set zoom to an absolute value: `NDIlib_recv_ptz_zoom()`
 | --------- | ------------------------------------------------------------ |
 | zoom      | Absolute value for zoom: 0.0 (zoomed in) to 1.0 (zoomed out) |
 
-### `<ntk_ptz_zoom_speed>` Element
+## `<ntk_ptz_zoom_speed>` Element
 
 Zoom at a particular speed: `NDIlib_recv_ptz_zoom_speed()`
 
@@ -32,7 +32,7 @@ Zoom at a particular speed: `NDIlib_recv_ptz_zoom_speed()`
 | ----------- | ------------------------------------------------------- |
 | zoom\_speed | Zoom speed: -1.0 (zoom outwards) to +1.0 (zoom inwards) |
 
-### `<ntk_ptz_pan_tilt>` Element
+## `<ntk_ptz_pan_tilt>` Element
 
 Set the pan and tilt to an absolute value: `NDIlib_recv_ptz_pan_tilt()`
 
@@ -47,7 +47,7 @@ Set the pan and tilt to an absolute value: `NDIlib_recv_ptz_pan_tilt()`
 | pan       | Pan location: -1.0 (left) to 0.0 (centered) to +1.0 (right)  |
 | tilt      | Tilt location: -1.0 (bottom) to 0.0 (centered) to +1.0 (top) |
 
-### `<ntk_ptz_pan_tilt_speed>` Element
+## `<ntk_ptz_pan_tilt_speed>` Element
 
 Pan and tilt at a particular speed: `NDIlib_recv_ptz_pan_tilt_speed()`
 
@@ -62,7 +62,7 @@ Pan and tilt at a particular speed: `NDIlib_recv_ptz_pan_tilt_speed()`
 | pan\_speed  | Pan speed: -1.0 (pan right) to 0.0 (stopped) to +1.0 (pan left) |
 | tilt\_speed | Tilt speed: -1.0 (tilt down) to 0.0 (stopped) to +1.0 (tilt up) |
 
-### `<ntk_ptz_focus>` Element
+## `<ntk_ptz_focus>` Element
 
 Set focus mode and distance:
 
@@ -82,7 +82,7 @@ Set focus mode and distance:
 | mode      | Sets focus mode: "manual" or "auto"                                                                           |
 | distance  | Focus distance: 0.0 (infinity) to 1.0 (focused as close as possible). Optional, only valid when mode="manual" |
 
-### `<ntk_ptz_recall_preset>` Element
+## `<ntk_ptz_recall_preset>` Element
 
 Recall settings from a particular preset: `NDIlib_recv_ptz_recall_preset()`
 
@@ -98,7 +98,7 @@ Recall settings from a particular preset: `NDIlib_recv_ptz_recall_preset()`
 | index     | The preset index to recall: 0 to 99                                                                                            |
 | speed     | How fast to move to the new preset: 0.0 (slowest) to 1.0 (fastest). Optional, should default to 1.0 (fastest) if not specified |
 
-### `<ntk_ptz_store_preset>` Element
+## `<ntk_ptz_store_preset>` Element
 
 Store current settings to a particular preset: `NDIlib_recv_ptz_store_preset()`
 
@@ -112,7 +112,7 @@ Store current settings to a particular preset: `NDIlib_recv_ptz_store_preset()`
 | --------- | ---------------------------------- |
 | index     | The preset index to store: 0 to 99 |
 
-### **`<ntk_ptz_white_balance>` Element**
+## **`<ntk_ptz_white_balance>` Element**
 
 Sets the white balance:
 
@@ -135,7 +135,7 @@ Sets the white balance:
 | red       | Manual red value: 0.0 (not red) to 1.0 (very red). Only present when mode="manual"                                            |
 | blue      | Manual blue value: 0.0 (not blue) to 1.0 (very blue). Only present when mode="manual"                                         |
 
-### `<ntk_ptz_exposure>` Element
+## `<ntk_ptz_exposure>` Element
 
 Sets the exposure settings:
 

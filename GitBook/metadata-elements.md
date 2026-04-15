@@ -2,8 +2,9 @@
 
 ## `<ndi_product>` Element
 
-* Initial Implementation: Vizrt
-* Location: Connection Metadata
+> Initial Implementation: [**Vizrt**](https://www.vizrt.com/)
+>
+> Location: **Connection Metadata**
 
 Used by both NDI senders and receivers to indicate product details.
 
@@ -32,8 +33,9 @@ Used by both NDI senders and receivers to indicate product details.
 
 ## `<ndi_capabilities>` Element
 
-* Initial Implementation: Vizrt
-* Location: Connection Metadata
+> Initial Implementation: [**Vizrt**](https://www.vizrt.com/)
+>
+> Location: **Connection Metadata**
 
 Indicated product capabilities for both NDI senders and receivers. Most capabilities are sender specific (ptz and exposure control) but NDI receivers will often have a web\_control URL.
 
@@ -59,11 +61,13 @@ Indicated product capabilities for both NDI senders and receivers. Most capabili
 | ntk\_focus="true"          | The NDI sender supports manual focus control.                                                                                                                                                                                         |
 | ntk\_autofocus="true"      | The NDI sender supports setting auto focus.                                                                                                                                                                                           |
 | ntk\_preset\_speed="true"  | The NDI sender has preset speed support.                                                                                                                                                                                              |
+| ntk\_kvm="true"            | The NDI sender supports KVM control.                                                                                                                                                                                                 |
 
 ## `<ndi_format>` Element
 
-* Initial Implementation: Vizrt
-* Location: Connection Metadata
+> Initial Implementation: [**Vizrt**](https://www.vizrt.com/)
+>
+> Location: **Connection Metadata**
 
 Sent by an NDI receiver to indicate it's preferred or native format.
 
@@ -106,9 +110,11 @@ At least one of the following child elements is required.
 
 ## `<ndi_color_info>` Element
 
-* Initial Implementation: Vizrt
-* Location: Video Frame Metadata
-* Initial NDI Version: 6.0
+> Initial Implementation: [**Vizrt**](https://www.vizrt.com/)
+>
+> Location: **Video Frame Metadata**
+>
+> Initial NDI Version: **6.0**
 
 The `<ndi_color_info>` element provides colorimitry details for the associated video frame.
 
@@ -130,9 +136,11 @@ The `<ndi_color_info>` element provides colorimitry details for the associated v
 
 ## `<ndi_metadata_group>` Element
 
-* Initial Implementation: Vizrt
-* Location: Metadata (all flavors)
-* Initial NDI Version: 6.0 for video frame metadata, 6.1 for generic metadata frames
+> Initial Implementation: [**Vizrt**](https://www.vizrt.com/)
+>
+> Location: **Metadata (all flavors)**
+>
+> Initial NDI Version: **6.0 for video frame metadata, 6.1 for generic metadata frames**
 
 Properly formatted XML allows only one root element. If multiple metadata elements need to be attached to a single audio or video frame, they should be grouped together as child elements of an `ndi_metadata_group` root element.
 
@@ -150,9 +158,13 @@ Properly formatted XML allows only one root element. If multiple metadata elemen
 
 ## `<ndi_tracking_info>` Element
 
-* Initial Implementation: Vizrt
-* Location: Video Frame Metadata
-* Initial NDI Version: 5.x
+> Initial Implementation: [**Vizrt**](https://www.vizrt.com/)
+>
+> Location: **Video Frame Metadata**
+>
+> Supported Protocol&#x73;**: FreeD, Trackmen**
+>
+> Initial NDI Version: **5.x**
 
 ````xml
 <ndi_tracking_info version="1.0.0">
@@ -309,8 +321,9 @@ The `<axis>` element contains data for one axis. This element contains no text a
 
 ## `<ndi_video_codec>` Element
 
-* Initial Implementation: NewTek
-* Location: Metadata
+> Initial Implementation: **Vizrt**
+>
+> Location: **Metadata Frame**
 
 Sent via NDIlib\_recv\_send\_metadata() by the application which created the NDI receive instance.
 

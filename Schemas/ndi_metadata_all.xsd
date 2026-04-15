@@ -14,6 +14,7 @@
     <xs:include schemaLocation="ndi_metadata_element.xsd"/>
     <xs:include schemaLocation="ndi_video_codec.xsd"/>
     <xs:include schemaLocation="ntk_ptz.xsd"/>
+    <xs:include schemaLocation="ndi_kvm.xsd"/>
 
     <!-- Video Frame Metadata -->
     <xs:include schemaLocation="vancData.xsd"/>

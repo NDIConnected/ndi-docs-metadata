@@ -2,17 +2,15 @@
 
 ## `<vancData>` Element (CEA-708 & SCTE-104)
 
-* Initial Implementation: ToolsOnAir
-* Location: Video Frame Metadata
+> Initial Implementation: [**ToolsOnAir**](https://www.toolsonair.com/)
+>
+> Location: **Video Frame Metadata**
 
-Legacy close captioning data and SCTE triggers are passed as NDI metadata by
-encoding the corresponding SDI vertical ancillary data packets directly as XML.
-Note that this method should not be used as a general solution for transitting
-SDI Ancillary data via NDI, but is used in this case because workflows using
-these protocols are very SDI centric and this method is supported by existing
-equipment and workflows.
+Legacy close captioning data and SCTE triggers are passed as NDI metadata by encoding the corresponding SDI vertical ancillary data packets directly as XML. Note that this method should not be used as a general solution for transitting SDI Ancillary data via NDI, but is used in this case because workflows using these protocols are very SDI centric and this method is supported by existing equipment and workflows.
 
+{% hint style="warning" %}
 This mechanism should **NOT** be used to tunnel arbitrary SDI ancillary data which can readily be represented by XML.
+{% endhint %}
 
 ```xml
 <vancData version="1.0">
@@ -33,14 +31,24 @@ This mechanism should **NOT** be used to tunnel arbitrary SDI ancillary data whi
 | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------- |
 | `vancPacket` | This element contains the details for one ancillary data packet. Any number of vancPacket elements may be contained within one vancData element |
 
-##### `vancPacket` Element
+**`vancPacket` Element**
 
-The `vancPacket` element provides details for one ancillary data packet. The
-ancillary packet data is base64 encoded while the ancillary packet header
-details are included as attributes of the vancPacket element.
+The `vancPacket` element provides details for one SMPTE ST-291 ancillary data
+packet.  The various ST-291 elements map to the `vancPacket` element as follows:
+
+* ADF: Ancillary Data Flag: Not transmitted
+* DID: Data ID: Sent as an attribute
+* SDID: Secondary DID: Sent as an attribute
+* DC: Data Count: Not transmitted
+* UDW: User Data Words: Sent as text content, 8-bit, base64 encoded
+* CS: Checksum: Not transmitted
+
+Note that the user data word content of the ancillary data packet is sent as
+base64 encoded 8-bit data.  Bits 8 (parity) and 9 (NOT bit 8) are not
+transmitted.
 
 DID and SDID values and ancillary data content are per SMPTE standards ST-334
-(CEA-708) and ST-2010 (SCTE-104)
+(CEA-708) and ST-2010 (SCTE-104).
 
 The following ancillary data packet types are currently supported:
 
@@ -51,7 +59,7 @@ The following ancillary data packet types are currently supported:
 <vancPacket did="xs:int" sdid="xs:int" line="xs:int">xs:base64Binary</vancPacket>
 ```
 
-##### `vancPacket` Attributes
+**`vancPacket` Attributes**
 
 | Attribute | Description                                               |
 | --------- | --------------------------------------------------------- |
@@ -61,9 +69,11 @@ The following ancillary data packet types are currently supported:
 
 ## Midi `<ndi_metadata type="midi">` Element
 
-* Initial Implementation: Lamamix
-* Location: Metadata Frame
-* Initial NDI Version: 6.1
+> Initial Implementation: [**Lamamix**](https://lamamix.com/)
+>
+> Location: **Metadata Frame**
+>
+> Initial NDI Version: **6.1**
 
 ```xml
 <ndi_metadata type="midi">
@@ -79,15 +89,14 @@ The following ancillary data packet types are currently supported:
 
 ## DMX `<ndi_metadata type="dmx">` Element
 
-* Initial Implementation: Salrayworks
-* Location: Metadata Frame
-* Initial NDI Version: 6.1
+> Initial Implementation: [**Salrayworks**](https://www.salrayworks.com/)
+>
+> Location: **Metadata Frame**
+>
+> Initial NDI Version: **6.1**
 
 {% hint style="info" %}
-Some early versions of DMX used the tag `<SALRAY_DMX>` instead of `<ndi_metadata
-type="dmx">`. Devices receiving DMX via NDI Metadata should look for both
-element names. Devices sending DMX via NDI metadata should use the
-`<ndi_metadata type="dmx">` element with NDI SDK version 6.1 or newer.
+Some early versions of DMX used the tag `<SALRAY_DMX>` instead of `<ndi_metadata type="dmx">`. Devices receiving DMX via NDI Metadata should look for both element names. Devices sending DMX via NDI metadata should use the `<ndi_metadata type="dmx">` element with NDI SDK version 6.1 or newer.
 {% endhint %}
 
 ```xml
@@ -121,19 +130,19 @@ element names. Devices sending DMX via NDI metadata should use the
 | -------- | ------------------------------------------------------------ |
 | Universe | DMX transmit channel. Multiple universe elements are allowed |
 
-##### **`Universe` Attributes**
+**`Universe` Attributes**
 
 | Attribute | Description                                                                   |
 | --------- | ----------------------------------------------------------------------------- |
 | id        | DMX transmit channel: 1 (first channel) to the capacity of the DMX controller |
 
-##### **`Universe` Children**
+**`Universe` Children**
 
 | Child  | Description                                               |
 | ------ | --------------------------------------------------------- |
 | Stream | Represents DMX data. Multiple stream elements are allowed |
 
-##### **`Stream` Children**
+**`Stream` Children**
 
 | Child   | Description                                                                                                                          |
 | ------- | ------------------------------------------------------------------------------------------------------------------------------------ |
@@ -142,8 +151,8 @@ element names. Devices sending DMX via NDI metadata should use the
 
 ## Timed Text Captions
 
-* Initial Implementation: Various standards bodies
-* Location: Metadata Frame
+* Initial Implementation: **Various standards bodies**
+* Location: **Metadata Frame**
 
 Modern captioning solutions are migrating to a variety of XML based timed text formats such as:
 
@@ -154,22 +163,10 @@ Modern captioning solutions are migrating to a variety of XML based timed text f
 * EBU-TT
 * CFF-TT
 
-As these formats are natively XML they can be easily incorporated into an NDI
-stream as metadata.  As a transport protocol, NDI does not natively prefer any
-one of these standards over the others.  The properly formed XML conforming to
-one (or more) of these standards should simply be sent as an NDI metadata frame,
-optionally as the child of an `<ndi_metadata_group>` element if for some reason
-more than one element needs to be sent in the same metadata frame.
+As these formats are natively XML they can be easily incorporated into an NDI stream as metadata. As a transport protocol, NDI does not natively prefer any one of these standards over the others. The properly formed XML conforming to one (or more) of these standards should simply be sent as an NDI metadata frame, optionally as the child of an `<ndi_metadata_group>` element if for some reason more than one element needs to be sent in the same metadata frame.
 
-W3C has a good overview of the various timed text caption standards including
-links to many of the specifications:
-https://www.w3.org/AudioVideo/TT/docs/TTML-Profiles.html
+W3C has a good overview of the various timed text caption standards including links to many of the specifications: https://www.w3.org/AudioVideo/TT/docs/TTML-Profiles.html
 
-As a general rule, it is suggested that applications sending timed-text captions
-use the minimum set of features necessary for full operation.  Receivers should
-be able to process any Well Formed XML, ignoring any elements or attributes they
-do not currenntly implement.
+As a general rule, it is suggested that applications sending timed-text captions use the minimum set of features necessary for full operation. Receivers should be able to process any Well Formed XML, ignoring any elements or attributes they do not currenntly implement.
 
-If you are interested in supporting any of the timed-text captioning solutions
-in real-world workflows, the NDI team would be happy to coordinate with you to
-help insure consistency and interoperability across the NDI ecosystem.
+If you are interested in supporting any of the timed-text captioning solutions in real-world workflows, the NDI team would be happy to coordinate with you to help insure consistency and interoperability across the NDI ecosystem.

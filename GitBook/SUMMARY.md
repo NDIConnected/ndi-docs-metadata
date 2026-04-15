@@ -7,4 +7,5 @@
   * [Metadata Elements](metadata-elements.md)
   * [Proposed New Metadata Messages](proposed-new-metadata-messages.md)
   * [PTZ and Control Messages](ptz-and-control-messages.md)
+  * [KVM Messages](kvm-messages.md)
   * [Undocumented Mysteries](undocumented-mysteries.md)

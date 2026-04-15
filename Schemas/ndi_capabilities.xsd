@@ -14,5 +14,6 @@
         <xs:attribute name="ntk_focus" type="xs:boolean" use="optional" />
         <xs:attribute name="ntk_autofocus" type="xs:boolean" use="optional" />
         <xs:attribute name="ntk_preset_speed" type="xs:boolean" use="optional" />
+        <xs:attribute name="ntk_kvm" type="xs:boolean" use="optional" />
     </xs:complexType>
 </xs:schema>

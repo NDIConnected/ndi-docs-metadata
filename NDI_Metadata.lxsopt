@@ -1,10 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <XmlStudioProjectOptions Version="20.7.17.13201">
-  <File>.\Schemas\ndi_metadata_recv.xsd</File>
-  <File>.\Schemas\ndi_metadata_all.xsd</File>
-  <File>.\Schemas\ndi_metadata_send.xsd</File>
+  <File>.\Schemas\ndi_metadata_element.xsd</File>
   <File>.\Schemas\ndi_metadata_video.xsd</File>
-  <ActiveWindow>ndi_metadata_all.xsd</ActiveWindow>
+  <File>.\Schemas\ndi_metadata_send.xsd</File>
+  <File>.\Schemas\ndi_metadata_all.xsd</File>
+  <File>.\Schemas\ndi_metadata_recv.xsd</File>
+  <File>.\Schemas\ndi_capabilities.xsd</File>
+  <File>.\Schemas\ntk_ptz.xsd</File>
+  <File>.\Schemas\ndi_kvm.xsd</File>
+  <File>.\Schemas\ndi_format.xsd</File>
+  <File>.\Schemas\vancData.xsd</File>
+  <File>.\Schemas\salray_dmx.xsd</File>
+  <File>.\Schemas\ndi_color_info.xsd</File>
+  <File>.\Schemas\ndi_tracking_info.xsd</File>
+  <File>.\Schemas\ndi_product.xsd</File>
+  <ActiveWindow>ndi_kvm.xsd</ActiveWindow>
   <ProjectTreeState />
   <UserProperties sourceUri=".\Documents\ndi_capabilities.xml">
     <Value name="DisplayMode">Source</Value>
@@ -134,6 +144,9 @@
     <Value name="DisplayMode">Source</Value>
     <Value name="ValidatingSchema">XML:Xerces:1.1:Validating</Value>
   </UserProperties>
+  <UserProperties sourceUri=".\Documents\ndi_kvm_00.xml">
+    <Value name="DisplayMode">Source</Value>
+  </UserProperties>
   <UserProperties sourceUri=".\Schemas\ndi_capabilities.xsd">
     <Value name="DisplayMode">Source</Value>
     <Value name="ValidatingSchema">XSD:Xerces:1.1:Validating</Value>
@@ -185,5 +198,12 @@
   <UserProperties sourceUri=".\Schemas\ndi_metadata_video.xsd">
     <Value name="ValidatingSchema">XSD:Xerces:1.1:Validating</Value>
     <Value name="DisplayMode">Source</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Schemas\salray_dmx.xsd">
+    <Value name="ValidatingSchema">XSD:Xerces:1.0:Validating</Value>
+    <Value name="DisplayMode">Source</Value>
+  </UserProperties>
+  <UserProperties sourceUri=".\Schemas\ndi_kvm.xsd">
+    <Value name="ValidatingSchema">XSD:Xerces:1.1:Validating</Value>
   </UserProperties>
 </XmlStudioProjectOptions>

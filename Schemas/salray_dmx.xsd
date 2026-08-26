@@ -5,9 +5,9 @@
             vc:minVersion="1.1">
 
     <!-- DMX Legacy Implementation -->
-    <xs:element name="SALRAY_DMX" type="legacy-dmx_type"/>
+    <xs:element name="SALRAY_DMX" type="legacy_dmx_type"/>
 
-    <xs:complexType name="legacy-dmx_type">
+    <xs:complexType name="legacy_dmx_type">
         <xs:sequence>
             <xs:element name="version" minOccurs="0" >
                 <xs:simpleType>

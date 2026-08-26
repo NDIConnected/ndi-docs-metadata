@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.1.1] - 2026-08-26
+### Changed
+- Replaced dashes with underscore in schema type names and filenames
+
 ## [1.1.0] - 2026-04-15
 ### Added
 - CHANGELOG.md

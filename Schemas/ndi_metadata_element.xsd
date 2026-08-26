@@ -8,8 +8,8 @@
     <xs:include schemaLocation="salray_dmx.xsd"/>
 
     <xs:element name="ndi_metadata" type="ndi_metadata_type">
-        <xs:alternative test="@type = 'midi'" type="metadata-midi_type"/>
-        <xs:alternative test="@type = 'dmx'" type="metadata-dmx_type"/>
+        <xs:alternative test="@type = 'midi'" type="metadata_midi_type"/>
+        <xs:alternative test="@type = 'dmx'" type="metadata_dmx_type"/>
     </xs:element>
 
     <xs:complexType name="ndi_metadata_type">
@@ -25,7 +25,7 @@
     </xs:simpleType>
 
     <!-- MIDI -->
-    <xs:complexType name="metadata-midi_type">
+    <xs:complexType name="metadata_midi_type">
         <xs:complexContent>
             <xs:extension base="ndi_metadata_type">
                 <xs:sequence>
@@ -36,7 +36,7 @@
     </xs:complexType>
 
     <!-- DMX -->
-    <xs:complexType name="metadata-dmx_type">
+    <xs:complexType name="metadata_dmx_type">
         <xs:complexContent>
             <xs:extension base="ndi_metadata_type">
                 <xs:sequence>

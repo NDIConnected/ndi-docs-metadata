@@ -1,0 +1,15 @@
+<ndi_metadata_group>
+    <ndi_color_info matrix="bt_2020" primaries="bt_2020" transfer="bt_2100_pq"/>
+    <ndi_metadata type="hdr" version="1.0">
+        <mastering_display_color_volume>
+            <primaries>
+                <green x="13250" y="34500"/>
+                <blue x="7500" y="3000"/>
+                <red x="34000" y="16000"/>
+            </primaries>
+            <white_point x="15635" y="16450"/>
+            <luminance max="10000000" min="1"/>
+        </mastering_display_color_volume>
+        <content_light_level maxCLL="1000" maxFALL="400"/>
+    </ndi_metadata>
+</ndi_metadata_group>

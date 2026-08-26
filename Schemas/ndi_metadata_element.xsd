@@ -10,10 +10,12 @@
     <xs:element name="ndi_metadata" type="ndi_metadata_type">
         <xs:alternative test="@type = 'midi'" type="metadata_midi_type"/>
         <xs:alternative test="@type = 'dmx'" type="metadata_dmx_type"/>
+        <xs:alternative test="@type = 'hdr'" type="metadata_hdr_type"/>
     </xs:element>
 
     <xs:complexType name="ndi_metadata_type">
         <xs:attribute name="type" type="ndi_metadata_attr_type" use="required" />
+        <xs:attribute name="version" type="ndi_metadata_attr_version" use="optional" />
     </xs:complexType>
 
     <!-- Valid type values for the ndi_metadata element -->
@@ -21,6 +23,14 @@
         <xs:restriction base="xs:string">
             <xs:enumeration value="midi" />
             <xs:enumeration value="dmx" />
+            <xs:enumeration value="hdr" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Valid version values for the ndi_metadata element -->
+    <xs:simpleType name="ndi_metadata_attr_version">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9]+\.[0-9]+\.*[0-9]*" />
         </xs:restriction>
     </xs:simpleType>
 
@@ -79,5 +89,84 @@
             <xs:maxInclusive value="512"/>
         </xs:restriction>
     </xs:simpleType>
+
+    <!-- HDR -->
+    <!-- Allowed Versions -->
+    <xs:simpleType name="ndi_metadata_attr_hdr_version">
+        <xs:restriction base="ndi_metadata_attr_version">
+            <xs:enumeration value="1.0" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Base type restricted to legal version values -->
+    <xs:complexType name="metadata_hdrv_type">
+        <xs:complexContent>
+            <xs:restriction base="ndi_metadata_type">
+                <xs:attribute name="version" type="ndi_metadata_attr_hdr_version" use="required" />
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+    
+    <!-- Type with legal version extended with HDR metadata -->
+    <xs:complexType name="metadata_hdr_type">
+        <xs:complexContent>
+            <xs:extension base="metadata_hdrv_type">
+                <xs:sequence>
+                    <xs:element name="mastering_display_color_volume" type="metadata_hdr_mdcv_type" />
+                    <xs:element name="content_light_level" type="metadata_hdr_cll_type" minOccurs="0" />
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- Mastering Display Color Volume -->
+    <xs:complexType name="metadata_hdr_mdcv_type">
+        <xs:sequence>
+            <xs:element name="primaries">
+                <xs:complexType>
+                    <xs:all>
+                        <xs:element name="green" minOccurs="1">
+                            <xs:complexType>
+                                <xs:attribute name="x" type="xs:unsignedShort" use="required" />
+                                <xs:attribute name="y" type="xs:unsignedShort" use="required" />
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="blue" minOccurs="1">
+                            <xs:complexType>
+                                <xs:attribute name="x" type="xs:unsignedShort" use="required" />
+                                <xs:attribute name="y" type="xs:unsignedShort" use="required" />
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="red" minOccurs="1">
+                            <xs:complexType>
+                                <xs:attribute name="x" type="xs:unsignedShort" use="required" />
+                                <xs:attribute name="y" type="xs:unsignedShort" use="required" />
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:all>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="white_point">
+                <xs:complexType>
+                    <xs:attribute name="x" type="xs:unsignedShort" use="required" />
+                    <xs:attribute name="y" type="xs:unsignedShort" use="required" />
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="luminance">
+                <xs:complexType>
+                    <xs:attribute name="max" type="xs:unsignedInt" use="required" />
+                    <xs:attribute name="min" type="xs:unsignedInt" use="required" />
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <!-- Content Light Level Info -->
+    <xs:complexType name="metadata_hdr_cll_type">
+        <xs:attribute name="maxCLL" type="xs:unsignedShort" use="optional"/>
+        <xs:attribute name="maxFALL" type="xs:unsignedShort" use="optional"/>
+        <!-- At least one attribute must be present -->
+        <xs:assert test="(@maxCLL or @maxFALL)"/>
+    </xs:complexType>
 
 </xs:schema>

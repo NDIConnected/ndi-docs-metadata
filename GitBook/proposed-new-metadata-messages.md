@@ -149,6 +149,127 @@ Some early versions of DMX used the tag `<SALRAY_DMX>` instead of `<ndi_metadata
 | Address | Starting DMX channel: 1 to 512                                                                                                       |
 | Data    | Hexidecimal representation of DMX data. Data is read left to right (eg: 0x01 is the first byte transmitted for universe 1, address 1 |
 
+## HDR `<ndi_metadata type="hdr">` Element
+
+> Initial Implementation: [**Vizrt**](https://www.vizrt.com/)
+>
+> Location: **Video Frame Metadata**
+>
+> Initial NDI Version: **6.1**
+
+This metadata element is used to transport additional metadata required for HDR
+beyond what is specified in the `ndi_color_info` element.
+
+```xml
+<ndi_metadata type="hdr" version="1.0">
+  <mastering_display_color_volume>
+    <primaries>
+      <green x="13250" y="34500"/>
+      <blue x="7500" y="3000"/>
+      <red x="34000" y="16000"/>
+    </primaries>
+    <white_point x="15635" y="16450"/>
+    <luminance max="10000000" min="1"/>
+  </mastering_display_color_volume>
+  <content_light_level maxCLL="1000" maxFALL="400"/>
+</ndi_metadata>
+```
+
+#### HDR `<ndi_metadata type="hdr">` Attributes
+
+| Attribute | Description                                                                                                                                 |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| version   | <p>The <code>&#x3C;ndi_metadata type="hdr"></code> element must have a version attribute.<br>The version attribute supported by this standard is "1.0"</p> |
+
+#### HDR `<ndi_metadata type="hdr">` Children
+
+| Child    | Description                                                  |
+| -------- | ------------------------------------------------------------ |
+| mastering_display_color_volume | Mastering display color volume, per SMPTE [ST-2086](https://pub.smpte.org/doc/st2086/). Carries the payload of SEI message 137. One element per `<ndi_metadata type="hdr">` element, sent only when the source signaled the metadata |
+| content_light_level            | Content light level information, per [CTA-861](https://members.cta.tech/ctaPublicationDetails/?id=11016f33-3422-e811-90ce-0003ff528c1a). Carries the payload of SEI message 144. One element per `<ndi_metadata type="hdr">` element, sent only when the source signaled the metadata  |
+
+**`mastering_display_color_volume` Element**
+
+The `mastering_display_color_volume` element provides the chromaticity
+coordinates and luminance range of the display the content was graded on. This
+element is all-or-nothing, every child element and attribute is required.  A
+receiver that finds `mastering_display_color_volume` incomplete, out of range,
+or malformed **MUST** treat the entire `mastering_display_color_volume` subtree
+as absent rather than substituting defaults for the missing parts.
+
+Values are defined by SMPTE [ST-2086](https://pub.smpte.org/doc/st2086/) and are
+mapped to integer values per the "Mastering display colour volume" SEI message
+(SEI-137) syntax specified in ITU-T
+[H.264](https://www.itu.int/rec/T-REC-H.264/en) (D.2.29) and
+[H.265](https://www.itu.int/rec/T-REC-H.265/en) (D.2.28).
+
+Chromaticity and luminance values outside of the valid ranges listed below may
+be transmitted and can be used for purposes outside the scope of this
+specification.
+
+**`mastering_display_color_volume` Children**
+
+| Child  | Description                                               |
+| ------ | --------------------------------------------------------- |
+| primaries | The normalized chromaticity coordinates of the mastering display |
+| white_point | The normalized chromaticity coordinate of the white point of the mastering display |
+| luminance | The nominal maximum and minimum display luminance of the mastering display |
+
+**`primaries` Children**
+
+The normalized chromaticity coordinates of the mastering display
+
+| Child  | Description                                               |
+| ------ | --------------------------------------------------------- |
+| green  | Chromaticity of the green primary<br>Maps to `display_primaries_x[0]` and `display_primaries_y[0]` |
+| blue   | Chromaticity of the blue primary<br>Maps to `display_primaries_x[1]` and `display_primaries_y[1]` |
+| red   | Chromaticity of the red primary<br>Maps to `display_primaries_x[2]` and `display_primaries_y[2]` |
+
+**`green`, `blue`, and `red` Attributes**
+
+| Attribute  | Description                                               |
+| ------ | --------------------------------------------------------- |
+| x      | The CIE 1931 x chromaticity coordinate of the primary, as an unsigned 16-bit integer (`xs:unsignedShort`) in units of 0.00002.<br>Valid range: 5 to 37000, inclusive. |
+| y      | The CIE 1931 y chromaticity coordinate of the primary, as an unsigned 16-bit integer (`xs:unsignedShort`) in units of 0.00002.<br>Valid range: 5 to 42000, inclusive. |
+
+**`white_point` Attributes**
+
+| Attribute  | Description                                               |
+| ------ | --------------------------------------------------------- |
+| x      | The CIE 1931 x chromaticity coordinate of the white point, as an unsigned 16-bit integer (`xs:unsignedShort`) in units of 0.00002.<br>Valid range: 5 to 37000, inclusive, 0 indicates unknown.<br>Maps to `white_point_x` |
+| y      | The CIE 1931 y chromaticity coordinate of the white point, as an unsigned 16-bit integer (`xs:unsignedShort`) in units of 0.00002.<br>Valid range: 5 to 42000, inclusive, 0 indicates unknown.<br>Maps to `white_point_y` |
+
+**`luminance` Attributes**
+
+| Attribute | Description                                               |
+| ------ | --------------------------------------------------------- |
+| max    | The peak luminance of the mastering display, as an unsigned 32-bit integer (`xs:unsignedInt`) in units of 0.0001 cd/m².<br>Valid range: 50000000 to 1000000000 inclusive.<br>Maps to `max_display_mastering_luminance` |
+| min    | The black level of the mastering display, as an unsigned 32-bit integer (`xs:unsignedInt`) in units of 0.0001 cd/m².<br>Valid range: 1000 to 50000000, inclusive, must be less than max.<br>Maps to `min_display_mastering_luminance` |
+
+**`content_light_level` Element**
+
+The `content_light_level` element provides the peak and frame-average light
+levels of the content itself.
+
+Values are defined by
+[CTA-861](https://members.cta.tech/ctaPublicationDetails/?id=11016f33-3422-e811-90ce-0003ff528c1a)
+and are mapped to integer values per the "Content light level information" SEI
+message (SEI-144) syntax specified in ITU-T
+[H.264](https://www.itu.int/rec/T-REC-H.264/en) (D.2.31) and
+[H.265](https://www.itu.int/rec/T-REC-H.265/en) (D.2.35).
+
+**`content_light_level` Attributes**
+
+| Attribute | Description                                               |
+| ------ | --------------------------------------------------------- |
+| maxCLL | Maximum Content Light Level: the light level of the brightest pixel in the content, in cd/m², as an unsigned 16-bit integer (`xs:unsignedShort`). Range 0 to 65535, where 0 means unknown.<br>Maps to `max_content_light_level` |
+| maxFALL | Maximum Frame-average Light Level: the highest frame-average light level in the content, in cd/m², as an unsigned 16-bit integer (`xs:unsignedShort`). Range 0 to 65535, where 0 means unknown.<br>Maps to `max_pic_average_light_level` |
+
+Both attributes are independently optional, omit the element entirely when both
+values are unknown.
+
+A value of 0 means "unknown", as per the SEI message semantics.
+
 ## Timed Text Captions
 
 * Initial Implementation: **Various standards bodies**

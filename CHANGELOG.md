@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.2.0] - 2026-09-02
+### Added
+- Documentation, schema, and example for SMPTE-2086 / CTA-861 HDR metadata
+
 ## [1.1.1] - 2026-08-26
 ### Changed
 - Replaced dashes with underscore in schema type names and filenames

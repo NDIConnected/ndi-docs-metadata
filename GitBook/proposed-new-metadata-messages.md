@@ -151,7 +151,7 @@ Some early versions of DMX used the tag `<SALRAY_DMX>` instead of `<ndi_metadata
 
 ## HDR `<ndi_metadata type="hdr">` Element
 
-> Initial Implementation: [**Vizrt**](https://www.vizrt.com/)
+> Initial Implementation: [AWS Elemental MediaConnect](https://aws.amazon.com/mediaconnect/) and [**Vizrt**](https://www.vizrt.com/)
 >
 > Location: **Video Frame Metadata**
 >
